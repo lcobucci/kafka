@@ -1,0 +1,43 @@
+{
+    "name": "lcobucci/kafka",
+    "description": "PHP client for Kafka",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luís Cobucci",
+            "email": "lcobucci@gmail.com"
+        }
+    ],
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "require": {
+        "php-64bit": "^7.2"
+    },
+    "require-dev": {
+        "infection/infection": "^0.10",
+        "lcobucci/coding-standard": "^1.0",
+        "phpstan/phpstan": "^0.10",
+        "phpstan/phpstan-deprecation-rules": "^0.10",
+        "phpstan/phpstan-phpunit": "^0.10",
+        "phpstan/phpstan-strict-rules": "^0.10",
+        "phpunit/phpunit": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lcobucci\\Kafka\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lcobucci\\Kafka\\Test\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
