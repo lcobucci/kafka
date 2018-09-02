@@ -87,13 +87,43 @@ final class Message
     }
 
     /**
+     * Returns the remaining allocated bytes (based on the current position)
+     */
+    public function remaining(): int
+    {
+        return $this->length - $this->position;
+    }
+
+    /**
+     * Returns the current position
+     */
+    public function position(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * Returns N bytes from an offset without modifying the current position
+     *
+     * @throws NotEnoughBytesAllocated When trying to read from an invalid offset.
+     */
+    public function get(int $offset, int $length = 1): string
+    {
+        if ($this->length - $offset < $length) {
+            throw NotEnoughBytesAllocated::forLength($length);
+        }
+
+        return substr($this->bytes, $offset, $length);
+    }
+
+    /**
      * Returns the current offset to start reading/writing and moves the cursor by given length
      *
      * @throws NotEnoughBytesAllocated When trying to read/write from/into an invalid position.
      */
     private function nextIndex(int $length): int
     {
-        if ($this->length - $this->position < $length) {
+        if ($this->remaining() < $length) {
             throw NotEnoughBytesAllocated::forLength($length);
         }
 
