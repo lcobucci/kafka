@@ -49,12 +49,103 @@ final class MessageTest extends TestCase
     /**
      * @test
      *
+     * @covers ::remaining
+     *
+     * @uses \Lcobucci\Kafka\Protocol\Message::__construct()
+     * @uses \Lcobucci\Kafka\Protocol\Message::fromContent()
+     * @uses \Lcobucci\Kafka\Protocol\Message::read()
+     * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     */
+    public function remainingShouldReturnTheNumberOfBytesLeftInTheMessage(): void
+    {
+        $message = Message::fromContent("\0\0");
+
+        self::assertSame(2, $message->remaining());
+
+        $message->read(1);
+
+        self::assertSame(1, $message->remaining());
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::position
+     *
+     * @uses \Lcobucci\Kafka\Protocol\Message::__construct()
+     * @uses \Lcobucci\Kafka\Protocol\Message::fromContent()
+     * @uses \Lcobucci\Kafka\Protocol\Message::read()
+     * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
+     */
+    public function positionShouldReturnTheNumberOfReadBytes(): void
+    {
+        $message = Message::fromContent("\0\0");
+
+        self::assertSame(0, $message->position());
+
+        $message->read(1);
+
+        self::assertSame(1, $message->position());
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::get
+     *
+     * @uses \Lcobucci\Kafka\Protocol\Message::__construct()
+     * @uses \Lcobucci\Kafka\Protocol\Message::fromContent()
+     * @uses \Lcobucci\Kafka\Protocol\Message::position()
+     * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
+     * @uses \Lcobucci\Kafka\Protocol\Message::read()
+     */
+    public function getShouldReturnTheRequestedBytesWithoutChangingThePosition(): void
+    {
+        $message = Message::fromContent("\0\0");
+
+        self::assertSame("\0", $message->get(0, 1));
+        self::assertSame("\0\0", $message->get(0, 2));
+        self::assertSame(0, $message->position());
+
+        self::assertSame("\0", $message->read(1));
+        self::assertSame(1, $message->position());
+
+        self::assertSame("\0", $message->get(0));
+        self::assertSame(1, $message->position());
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::get
+     * @covers \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
+     *
+     * @uses \Lcobucci\Kafka\Protocol\Message::__construct()
+     * @uses \Lcobucci\Kafka\Protocol\Message::fromContent()
+     * @uses \Lcobucci\Kafka\Protocol\Message::position()
+     */
+    public function getShouldRaiseExceptionWhenThereIsNotEnoughAllocatedBytes(): void
+    {
+        $message = Message::fromContent("\0");
+
+        $this->expectException(NotEnoughBytesAllocated::class);
+        $this->expectExceptionMessage('It was not possible to read/write 2 byte(s) from current position');
+
+        $message->get(2, 2);
+    }
+
+    /**
+     * @test
+     *
      * @covers ::write
      * @covers ::nextIndex
      *
      * @uses \Lcobucci\Kafka\Protocol\Message::__construct()
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::bytes()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeShouldModifyTheAllocatedBytesAndMoveThePosition(): void
     {
@@ -75,6 +166,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::__construct()
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::bytes()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeShouldRaiseExceptionWhenThereIsNotEnoughAllocatedBytes(): void
     {
@@ -94,6 +186,7 @@ final class MessageTest extends TestCase
      *
      * @uses \Lcobucci\Kafka\Protocol\Message::__construct()
      * @uses \Lcobucci\Kafka\Protocol\Message::fromContent()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readShouldModifyThePositionAndReturnRequestedContent(): void
     {
@@ -112,6 +205,7 @@ final class MessageTest extends TestCase
      *
      * @uses \Lcobucci\Kafka\Protocol\Message::__construct()
      * @uses \Lcobucci\Kafka\Protocol\Message::fromContent()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readShouldRaiseExceptionWhenThereIsNotEnoughAllocatedBytes(): void
     {
@@ -133,6 +227,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::bytes()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeByteShouldAddTheBinaryValueOfTheDataAndMoveThePosition(): void
     {
@@ -155,6 +250,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeByteShouldThrowExceptionWhenValueIsSmallerThanLowerBound(): void
     {
@@ -176,6 +272,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeByteShouldThrowExceptionWhenValueIsBiggerThanUpperBound(): void
     {
@@ -199,6 +296,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::guardBounds()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readByteShouldMovePositionAndReturnATheCorrectValue(): void
     {
@@ -221,6 +319,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readByteShouldRaiseExceptionWhenThereIsNotEnoughAllocatedBytes(): void
     {
@@ -242,6 +341,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::bytes()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeShortShouldAddTheBinaryValueOfTheDataAndMoveThePosition(): void
     {
@@ -264,6 +364,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeShortShouldThrowExceptionWhenValueIsSmallerThanLowerBound(): void
     {
@@ -285,6 +386,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeShortShouldThrowExceptionWhenValueIsBiggerThanUpperBound(): void
     {
@@ -309,6 +411,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::guardBounds()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readShortShouldMovePositionAndReturnATheCorrectValue(): void
     {
@@ -331,6 +434,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readShortShouldRaiseExceptionWhenThereIsNotEnoughAllocatedBytes(): void
     {
@@ -352,6 +456,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::bytes()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeIntShouldAddTheBinaryValueOfTheDataAndMoveThePosition(): void
     {
@@ -374,6 +479,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeIntShouldThrowExceptionWhenValueIsSmallerThanLowerBound(): void
     {
@@ -395,6 +501,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeIntShouldThrowExceptionWhenValueIsBiggerThanUpperBound(): void
     {
@@ -419,6 +526,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::guardBounds()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readIntShouldMovePositionAndReturnATheCorrectValue(): void
     {
@@ -441,6 +549,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readIntShouldRaiseExceptionWhenThereIsNotEnoughAllocatedBytes(): void
     {
@@ -462,6 +571,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::bytes()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeUnsignedIntShouldAddTheBinaryValueOfTheDataAndMoveThePosition(): void
     {
@@ -484,6 +594,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeUnsignedIntShouldThrowExceptionWhenValueIsSmallerThanLowerBound(): void
     {
@@ -505,6 +616,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeUnsignedIntShouldThrowExceptionWhenValueIsBiggerThanUpperBound(): void
     {
@@ -528,6 +640,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::guardBounds()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readUnsignedIntShouldMovePositionAndReturnATheCorrectValue(): void
     {
@@ -550,6 +663,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readUnsignedIntShouldRaiseExceptionWhenThereIsNotEnoughAllocatedBytes(): void
     {
@@ -570,6 +684,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::bytes()
      * @uses \Lcobucci\Kafka\Protocol\Message::write()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function writeLongShouldAddTheBinaryValueOfTheDataAndMoveThePosition(): void
     {
@@ -593,6 +708,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::writeLong()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readLongShouldMovePositionAndReturnATheCorrectValue(): void
     {
@@ -615,6 +731,7 @@ final class MessageTest extends TestCase
      * @uses \Lcobucci\Kafka\Protocol\Message::allocate()
      * @uses \Lcobucci\Kafka\Protocol\Message::read()
      * @uses \Lcobucci\Kafka\Protocol\Message::nextIndex()
+     * @uses \Lcobucci\Kafka\Protocol\Message::remaining()
      */
     public function readLongShouldRaiseExceptionWhenThereIsNotEnoughAllocatedBytes(): void
     {

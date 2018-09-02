@@ -16,6 +16,15 @@ use function unpack;
  */
 final class Message
 {
+    private const EMPTY_CONTENT = "\0";
+    private const BYTE_RANGE    = [-2 ** 7, 2 ** 7 - 1];
+    private const SHORT_RANGE   = [-2 ** 15, 2 ** 15 - 1];
+    private const INT_RANGE     = [-2 ** 31, 2 ** 31 - 1];
+    private const UINT_RANGE    = [0, 2 ** 32 - 1];
+
+    private const CONVERSION_SHORT = [2 ** 15 - 1, 2 ** 16];
+    private const CONVERSION_INT   = [2 ** 31 - 1, 2 ** 32];
+
     /**
      * @var string
      */
@@ -42,7 +51,7 @@ final class Message
      */
     public static function allocate(int $length): self
     {
-        return new self(str_repeat("\0", $length), $length);
+        return new self(str_repeat(self::EMPTY_CONTENT, $length), $length);
     }
 
     /**
@@ -78,13 +87,43 @@ final class Message
     }
 
     /**
+     * Returns the remaining allocated bytes (based on the current position)
+     */
+    public function remaining(): int
+    {
+        return $this->length - $this->position;
+    }
+
+    /**
+     * Returns the current position
+     */
+    public function position(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * Returns N bytes from an offset without modifying the current position
+     *
+     * @throws NotEnoughBytesAllocated When trying to read from an invalid offset.
+     */
+    public function get(int $offset, int $length = 1): string
+    {
+        if ($this->length - $offset < $length) {
+            throw NotEnoughBytesAllocated::forLength($length);
+        }
+
+        return substr($this->bytes, $offset, $length);
+    }
+
+    /**
      * Returns the current offset to start reading/writing and moves the cursor by given length
      *
      * @throws NotEnoughBytesAllocated When trying to read/write from/into an invalid position.
      */
     private function nextIndex(int $length): int
     {
-        if ($this->length - $this->position < $length) {
+        if ($this->remaining() < $length) {
             throw NotEnoughBytesAllocated::forLength($length);
         }
 
@@ -129,7 +168,7 @@ final class Message
      */
     public function writeByte(int $value): void
     {
-        $this->guardBounds($value, -2 ** 7, 2 ** 7 - 1);
+        $this->guardBounds($value, ...self::BYTE_RANGE);
         $this->write(pack('c', $value));
     }
 
@@ -163,7 +202,7 @@ final class Message
      */
     public function writeShort(int $value): void
     {
-        $this->guardBounds($value, -2 ** 15, 2 ** 15 - 1);
+        $this->guardBounds($value, ...self::SHORT_RANGE);
         $this->write(pack('n', $value));
     }
 
@@ -174,11 +213,7 @@ final class Message
      */
     public function readShort(): int
     {
-        return $this->convertToSigned(
-            unpack('n', $this->read(2))[1],
-            2 ** 15 - 1,
-            2 ** 16
-        );
+        return $this->convertToSigned(unpack('n', $this->read(2))[1], ...self::CONVERSION_SHORT);
     }
 
     /**
@@ -201,7 +236,7 @@ final class Message
      */
     public function writeInt(int $value): void
     {
-        $this->guardBounds($value, -2 ** 31, 2 ** 31 - 1);
+        $this->guardBounds($value, ...self::INT_RANGE);
         $this->write(pack('N', $value));
     }
 
@@ -212,11 +247,7 @@ final class Message
      */
     public function readInt(): int
     {
-        return $this->convertToSigned(
-            unpack('N', $this->read(4))[1],
-            2 ** 31 - 1,
-            2 ** 32
-        );
+        return $this->convertToSigned(unpack('N', $this->read(4))[1], ...self::CONVERSION_INT);
     }
 
     /**
@@ -227,7 +258,7 @@ final class Message
      */
     public function writeUnsignedInt(int $value): void
     {
-        $this->guardBounds($value, 0, 2 ** 32 - 1);
+        $this->guardBounds($value, ...self::UINT_RANGE);
         $this->write(pack('N', $value));
     }
 
