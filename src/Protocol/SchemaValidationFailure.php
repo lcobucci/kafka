@@ -56,4 +56,13 @@ final class SchemaValidationFailure extends RuntimeException implements Exceptio
             sprintf('Field "%s" missing from given structure', $name)
         );
     }
+
+    public static function invalidValueForField(string $name, SchemaValidationFailure $failure): self
+    {
+        return new self(
+            sprintf('Invalid value for field "%s": %s', $name, $failure->getMessage()),
+            0,
+            $failure
+        );
+    }
 }
