@@ -49,4 +49,20 @@ final class SchemaValidationFailure extends RuntimeException implements Exceptio
             sprintf('String length (%d) is larger than the maximum length (%d)', $length, $maxLength)
         );
     }
+
+    public static function missingField(string $name): self
+    {
+        return new self(
+            sprintf('Field "%s" missing from given structure', $name)
+        );
+    }
+
+    public static function invalidValueForField(string $name, SchemaValidationFailure $failure): self
+    {
+        return new self(
+            sprintf('Invalid value for field "%s": %s', $name, $failure->getMessage()),
+            0,
+            $failure
+        );
+    }
 }
