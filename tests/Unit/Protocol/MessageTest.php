@@ -153,7 +153,7 @@ final class MessageTest extends TestCase
         $message->write('a');
 
         self::assertSame('a', $message->bytes());
-        self::assertAttributeSame(1, 'position', $message);
+        self::assertSame(0, $message->remaining());
     }
 
     /**
@@ -193,7 +193,7 @@ final class MessageTest extends TestCase
         $message = Message::fromContent('a');
 
         self::assertSame('a', $message->read(1));
-        self::assertAttributeSame(1, 'position', $message);
+        self::assertSame(0, $message->remaining());
     }
 
     /**
@@ -236,7 +236,7 @@ final class MessageTest extends TestCase
         $message->writeByte(127);
 
         self::assertSame('807f', bin2hex($message->bytes()));
-        self::assertAttributeSame(2, 'position', $message);
+        self::assertSame(0, $message->remaining());
     }
 
     /**
@@ -350,7 +350,7 @@ final class MessageTest extends TestCase
         $message->writeShort(32767);
 
         self::assertSame('80007fff', bin2hex($message->bytes()));
-        self::assertAttributeSame(4, 'position', $message);
+        self::assertSame(0, $message->remaining());
     }
 
     /**
@@ -465,7 +465,7 @@ final class MessageTest extends TestCase
         $message->writeInt(2147483647);
 
         self::assertSame('800000007fffffff', bin2hex($message->bytes()));
-        self::assertAttributeSame(8, 'position', $message);
+        self::assertSame(0, $message->remaining());
     }
 
     /**
@@ -580,7 +580,7 @@ final class MessageTest extends TestCase
         $message->writeUnsignedInt(4294967295);
 
         self::assertSame('00000000ffffffff', bin2hex($message->bytes()));
-        self::assertAttributeSame(8, 'position', $message);
+        self::assertSame(0, $message->remaining());
     }
 
     /**
@@ -693,7 +693,7 @@ final class MessageTest extends TestCase
         $message->writeLong(9223372036854775807);
 
         self::assertSame('80000000000000007fffffffffffffff', bin2hex($message->bytes()));
-        self::assertAttributeSame(16, 'position', $message);
+        self::assertSame(0, $message->remaining());
     }
 
     /**
