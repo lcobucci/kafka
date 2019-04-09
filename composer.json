@@ -17,13 +17,13 @@
         "php-64bit": "^7.2"
     },
     "require-dev": {
-        "infection/infection": "^0.11",
+        "infection/infection": "^0.12",
         "lcobucci/coding-standard": "^2.0",
-        "phpstan/phpstan": "^0.10",
-        "phpstan/phpstan-deprecation-rules": "^0.10",
-        "phpstan/phpstan-phpunit": "^0.10",
-        "phpstan/phpstan-strict-rules": "^0.10",
-        "phpunit/phpunit": "^7.5"
+        "phpstan/phpstan": "^0.11",
+        "phpstan/phpstan-deprecation-rules": "^0.11",
+        "phpstan/phpstan-phpunit": "^0.11",
+        "phpstan/phpstan-strict-rules": "^0.11",
+        "phpunit/phpunit": "^8.1"
     },
     "autoload": {
         "psr-4": {
