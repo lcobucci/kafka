@@ -9,3 +9,6 @@ parameters:
     paths:
         - src
         - tests
+
+    ignoreErrors:
+        - '#Variable method call .*Lcobucci\\Kafka\\Test\\Unit\\Protocol\\TypeTest#'
