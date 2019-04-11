@@ -10,7 +10,7 @@
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/lcobucci/kafka/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/lcobucci/kafka/?branch=master)
 
 A library to allow people to communicate to Kafka using plain PHP, compatible with
-all Kafka versions (due to the way the [protocol works](https://kafka.apache.org/protocol)).
+Kafka **v0.11+** (due to the way the [protocol works](https://kafka.apache.org/protocol)).
 
 ## Installation
 
