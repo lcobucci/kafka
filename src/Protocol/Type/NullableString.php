@@ -25,6 +25,7 @@ final class NullableString extends Type
     {
         if ($data === null) {
             $message->writeShort(-1);
+
             return;
         }
 

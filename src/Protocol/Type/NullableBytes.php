@@ -23,6 +23,7 @@ final class NullableBytes extends Type
     {
         if ($data === null) {
             $message->writeInt(-1);
+
             return;
         }
 
