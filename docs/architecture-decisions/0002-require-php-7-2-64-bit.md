@@ -4,7 +4,7 @@ Date: 2018-08-29
 
 ## Status
 
-Accepted
+Superceded by [7. Require latest stable PHP version](0007-require-latest-stable-php-version.md)
 
 ## Context
 

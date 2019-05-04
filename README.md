@@ -23,7 +23,7 @@ composer require lcobucci/kafka
 
 ### Dependencies
 
-- PHP 7.2+ (**64-bit only**)
+- PHP 7.3+ (**64-bit only**)
 
 ## Documentation
 
