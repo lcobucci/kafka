@@ -11,10 +11,10 @@ use function substr_replace;
 use function unpack;
 
 /**
- * Represents Kafka's binary message, providing ways to write and read content using big-endian byte order for
- * the basic data types required by kafka
+ * Represents a buffered content, providing ways to write and read content using big-endian byte order for the basic
+ * data types required by kafka
  */
-final class Message
+final class Buffer
 {
     private const EMPTY_CONTENT = "\0";
     private const BYTE_RANGE    = [-2 ** 7, 2 ** 7 - 1];

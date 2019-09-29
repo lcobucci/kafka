@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Test\Unit\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int16;
@@ -21,20 +21,20 @@ final class Int16Test extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function writeShouldAppendTwoBytesToMessageForGivenNumber(): void
     {
-        $message = Message::allocate(4);
+        $buffer = Buffer::allocate(4);
 
         $type = new Int16();
-        $type->write(-129, $message);
-        $type->write(128, $message);
+        $type->write(-129, $buffer);
+        $type->write(128, $buffer);
 
-        $message->reset();
+        $buffer->reset();
 
-        self::assertSame(-129, $message->readShort());
-        self::assertSame(128, $message->readShort());
+        self::assertSame(-129, $buffer->readShort());
+        self::assertSame(128, $buffer->readShort());
     }
 
     /**
@@ -42,7 +42,7 @@ final class Int16Test extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\ValueOutOfAllowedRange
      */
     public function writeShouldNotHandleExceptionsFromMessage(): void
@@ -50,7 +50,7 @@ final class Int16Test extends TestCase
         $type = new Int16();
 
         $this->expectException(ValueOutOfAllowedRange::class);
-        $type->write(32768, Message::allocate(2));
+        $type->write(32768, Buffer::allocate(2));
     }
 
     /**
@@ -58,15 +58,15 @@ final class Int16Test extends TestCase
      *
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function readShouldReturnSignedNumbers(): void
     {
-        $message = Message::fromContent(pack('n2', -32768, 32767));
-        $type    = new Int16();
+        $buffer = Buffer::fromContent(pack('n2', -32768, 32767));
+        $type   = new Int16();
 
-        self::assertSame(-32768, $type->read($message));
-        self::assertSame(32767, $type->read($message));
+        self::assertSame(-32768, $type->read($buffer));
+        self::assertSame(32767, $type->read($buffer));
     }
 
     /**
@@ -74,7 +74,7 @@ final class Int16Test extends TestCase
      *
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
      */
     public function readShouldNotHandleExceptionsFromMessage(): void
@@ -82,7 +82,7 @@ final class Int16Test extends TestCase
         $type = new Int16();
 
         $this->expectException(NotEnoughBytesAllocated::class);
-        $type->read(Message::allocate(0));
+        $type->read(Buffer::allocate(0));
     }
 
     /**

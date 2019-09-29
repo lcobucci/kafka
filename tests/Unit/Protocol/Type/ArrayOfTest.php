@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Test\Unit\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\ArrayOf;
@@ -22,21 +22,21 @@ final class ArrayOfTest extends TestCase
      * @covers ::__construct
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Type\Boolean
      */
     public function writeShouldAppendArrayCountAndEverySingleItem(): void
     {
-        $message = Message::allocate(6);
+        $buffer = Buffer::allocate(6);
 
         $type = new ArrayOf(new Boolean());
-        $type->write([true, false], $message);
+        $type->write([true, false], $buffer);
 
-        $message->reset();
+        $buffer->reset();
 
-        self::assertSame(2, $message->readInt());
-        self::assertSame(1, $message->readByte());
-        self::assertSame(0, $message->readByte());
+        self::assertSame(2, $buffer->readInt());
+        self::assertSame(1, $buffer->readByte());
+        self::assertSame(0, $buffer->readByte());
     }
 
     /**
@@ -45,19 +45,19 @@ final class ArrayOfTest extends TestCase
      * @covers ::__construct
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Type\Boolean
      */
     public function writeShouldAppendMinusOneWhenDataIsNull(): void
     {
-        $message = Message::allocate(4);
+        $buffer = Buffer::allocate(4);
 
         $type = new ArrayOf(new Boolean());
-        $type->write(null, $message);
+        $type->write(null, $buffer);
 
-        $message->reset();
+        $buffer->reset();
 
-        self::assertSame(-1, $message->readInt());
+        self::assertSame(-1, $buffer->readInt());
     }
 
     /**
@@ -66,7 +66,7 @@ final class ArrayOfTest extends TestCase
      * @covers ::__construct
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Type\Boolean
      * @uses \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
      */
@@ -75,7 +75,7 @@ final class ArrayOfTest extends TestCase
         $type = new ArrayOf(new Boolean());
 
         $this->expectException(NotEnoughBytesAllocated::class);
-        $type->write([], Message::allocate(0));
+        $type->write([], Buffer::allocate(0));
     }
 
     /**
@@ -84,16 +84,16 @@ final class ArrayOfTest extends TestCase
      * @covers ::__construct
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Type\Boolean
      */
     public function readShouldReturnConvertedData(): void
     {
-        $message = Message::fromContent(pack('Nc2N', 2, 1, 0, 0));
-        $type    = new ArrayOf(new Boolean());
+        $buffer = Buffer::fromContent(pack('Nc2N', 2, 1, 0, 0));
+        $type   = new ArrayOf(new Boolean());
 
-        self::assertSame([true, false], $type->read($message));
-        self::assertSame([], $type->read($message));
+        self::assertSame([true, false], $type->read($buffer));
+        self::assertSame([], $type->read($buffer));
     }
 
     /**
@@ -102,15 +102,15 @@ final class ArrayOfTest extends TestCase
      * @covers ::__construct
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Type\Boolean
      */
     public function readShouldReturnNullWhenCountIsMinusOne(): void
     {
-        $message = Message::fromContent(pack('N', -1));
-        $type    = new ArrayOf(new Boolean());
+        $buffer = Buffer::fromContent(pack('N', -1));
+        $type   = new ArrayOf(new Boolean());
 
-        self::assertNull($type->read($message));
+        self::assertNull($type->read($buffer));
     }
 
     /**
@@ -120,7 +120,7 @@ final class ArrayOfTest extends TestCase
      * @covers ::read
      *
      * @uses \Lcobucci\Kafka\Protocol\Type\Boolean
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
      */
     public function readShouldNotHandleExceptionsFromMessage(): void
@@ -128,7 +128,7 @@ final class ArrayOfTest extends TestCase
         $type = new ArrayOf(new Boolean());
 
         $this->expectException(NotEnoughBytesAllocated::class);
-        $type->read(Message::allocate(0));
+        $type->read(Buffer::allocate(0));
     }
 
     /**

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
 use function assert;
 
@@ -19,35 +19,35 @@ final class NullableBytes extends Type
     /**
      * {@inheritdoc}
      */
-    public function write($data, Message $message): void
+    public function write($data, Buffer $buffer): void
     {
         if ($data === null) {
-            $message->writeInt(-1);
+            $buffer->writeInt(-1);
 
             return;
         }
 
-        assert($data instanceof Message);
+        assert($data instanceof Buffer);
 
         $length   = $data->remaining();
         $position = $data->position();
 
-        $message->writeInt($length);
-        $message->write($data->get($position, $length));
+        $buffer->writeInt($length);
+        $buffer->write($data->get($position, $length));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function read(Message $message): ?Message
+    public function read(Buffer $buffer): ?Buffer
     {
-        $length = $message->readInt();
+        $length = $buffer->readInt();
 
         if ($length < 0) {
             return null;
         }
 
-        return Message::fromContent($message->read($length));
+        return Buffer::fromContent($buffer->read($length));
     }
 
     /**
@@ -59,7 +59,7 @@ final class NullableBytes extends Type
             return 4;
         }
 
-        assert($data instanceof Message);
+        assert($data instanceof Buffer);
 
         return 4 + $data->remaining();
     }
@@ -78,6 +78,6 @@ final class NullableBytes extends Type
     public function validate($data): void
     {
         $this->guardType($data, 'object', 'is_object');
-        $this->guardClass($data, Message::class);
+        $this->guardClass($data, Buffer::class);
     }
 }

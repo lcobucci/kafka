@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Test\Unit\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\NullableBytes;
@@ -21,19 +21,19 @@ final class NullableBytesTest extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function writeShouldAppendTheLengthUsingFourBytesAndTheContent(): void
     {
-        $message = Message::allocate(8);
+        $buffer = Buffer::allocate(8);
 
         $type = new NullableBytes();
-        $type->write(Message::fromContent('1234'), $message);
+        $type->write(Buffer::fromContent('1234'), $buffer);
 
-        $message->reset();
+        $buffer->reset();
 
-        self::assertSame(4, $message->readInt());
-        self::assertSame('1234', $message->read(4));
+        self::assertSame(4, $buffer->readInt());
+        self::assertSame('1234', $buffer->read(4));
     }
 
     /**
@@ -41,18 +41,18 @@ final class NullableBytesTest extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function writeShouldUseMinusOneForLengthWhenContentIsNull(): void
     {
-        $message = Message::allocate(4);
+        $buffer = Buffer::allocate(4);
 
         $type = new NullableBytes();
-        $type->write(null, $message);
+        $type->write(null, $buffer);
 
-        $message->reset();
+        $buffer->reset();
 
-        self::assertSame(-1, $message->readInt());
+        self::assertSame(-1, $buffer->readInt());
     }
 
     /**
@@ -60,15 +60,15 @@ final class NullableBytesTest extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function writeShouldNotModifyContentsPosition(): void
     {
-        $message = Message::allocate(8);
-        $content = Message::fromContent('1234');
+        $buffer  = Buffer::allocate(8);
+        $content = Buffer::fromContent('1234');
 
         $type = new NullableBytes();
-        $type->write($content, $message);
+        $type->write($content, $buffer);
 
         self::assertSame(0, $content->position());
     }
@@ -78,7 +78,7 @@ final class NullableBytesTest extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
      */
     public function writeShouldNotHandleExceptionsFromMessage(): void
@@ -86,7 +86,7 @@ final class NullableBytesTest extends TestCase
         $type = new NullableBytes();
 
         $this->expectException(NotEnoughBytesAllocated::class);
-        $type->write(Message::fromContent('1234'), Message::allocate(4));
+        $type->write(Buffer::fromContent('1234'), Buffer::allocate(4));
     }
 
     /**
@@ -94,16 +94,16 @@ final class NullableBytesTest extends TestCase
      *
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function readShouldReturnTheContentBasedOnLength(): void
     {
-        $message = Message::fromContent(pack('N', 4) . 'test' . pack('N', 0) . pack('N', -1));
-        $type    = new NullableBytes();
+        $buffer = Buffer::fromContent(pack('N', 4) . 'test' . pack('N', 0) . pack('N', -1));
+        $type   = new NullableBytes();
 
-        self::assertEquals(Message::fromContent('test'), $type->read($message));
-        self::assertEquals(Message::fromContent(''), $type->read($message));
-        self::assertNull($type->read($message));
+        self::assertEquals(Buffer::fromContent('test'), $type->read($buffer));
+        self::assertEquals(Buffer::fromContent(''), $type->read($buffer));
+        self::assertNull($type->read($buffer));
     }
 
     /**
@@ -111,7 +111,7 @@ final class NullableBytesTest extends TestCase
      *
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
      */
     public function readShouldNotHandleExceptionsFromMessage(): void
@@ -119,7 +119,7 @@ final class NullableBytesTest extends TestCase
         $type = new NullableBytes();
 
         $this->expectException(NotEnoughBytesAllocated::class);
-        $type->read(Message::allocate(0));
+        $type->read(Buffer::allocate(0));
     }
 
     /**
@@ -127,14 +127,14 @@ final class NullableBytesTest extends TestCase
      *
      * @covers ::sizeOf
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function sizeOfShouldReturnFourPlusRemainingBytes(): void
     {
         $type = new NullableBytes();
 
-        self::assertSame(6, $type->sizeOf(Message::allocate(2)));
-        self::assertSame(9, $type->sizeOf(Message::allocate(5)));
+        self::assertSame(6, $type->sizeOf(Buffer::allocate(2)));
+        self::assertSame(9, $type->sizeOf(Buffer::allocate(5)));
     }
 
     /**
@@ -167,14 +167,14 @@ final class NullableBytesTest extends TestCase
      * @covers ::validate
      *
      * @uses \Lcobucci\Kafka\Protocol\Type
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function validateShouldNotRaiseExceptionWhenValueIsAMessageOrNull(): void
     {
         $type = new NullableBytes();
 
-        $type->validate(Message::fromContent('test'));
-        $type->validate(Message::fromContent('testing'));
+        $type->validate(Buffer::fromContent('test'));
+        $type->validate(Buffer::fromContent('testing'));
         $type->validate(null);
 
         $this->addToAssertionCount(1);
@@ -211,7 +211,7 @@ final class NullableBytesTest extends TestCase
         $type = new NullableBytes();
 
         $this->expectException(SchemaValidationFailure::class);
-        $this->expectExceptionMessage(Message::class);
+        $this->expectExceptionMessage(Buffer::class);
 
         $type->validate(new RuntimeException());
     }

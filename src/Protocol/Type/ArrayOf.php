@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
 use function count;
 
@@ -28,27 +28,27 @@ final class ArrayOf extends Type
     /**
      * {@inheritdoc}
      */
-    public function write($data, Message $message): void
+    public function write($data, Buffer $buffer): void
     {
         if ($data === null) {
-            $message->writeInt(-1);
+            $buffer->writeInt(-1);
 
             return;
         }
 
-        $message->writeInt(count($data));
+        $buffer->writeInt(count($data));
 
         foreach ($data as $item) {
-            $this->type->write($item, $message);
+            $this->type->write($item, $buffer);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function read(Message $message): ?array
+    public function read(Buffer $buffer): ?array
     {
-        $count = $message->readInt();
+        $count = $buffer->readInt();
 
         if ($count < 0) {
             return null;
@@ -57,7 +57,7 @@ final class ArrayOf extends Type
         $items = [];
 
         for ($i = 0; $i < $count; ++$i) {
-            $items[] = $this->type->read($message);
+            $items[] = $this->type->read($buffer);
         }
 
         return $items;
