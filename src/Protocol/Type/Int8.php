@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
 
 /**
@@ -17,17 +17,17 @@ final class Int8 extends Type
     /**
      * {@inheritdoc}
      */
-    public function write($data, Message $message): void
+    public function write($data, Buffer $buffer): void
     {
-        $message->writeByte($data);
+        $buffer->writeByte($data);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function read(Message $message): int
+    public function read(Buffer $buffer): int
     {
-        return $message->readByte();
+        return $buffer->readByte();
     }
 
     /**

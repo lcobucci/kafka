@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
 use function strlen;
 
@@ -21,30 +21,30 @@ final class NullableString extends Type
     /**
      * {@inheritdoc}
      */
-    public function write($data, Message $message): void
+    public function write($data, Buffer $buffer): void
     {
         if ($data === null) {
-            $message->writeShort(-1);
+            $buffer->writeShort(-1);
 
             return;
         }
 
-        $message->writeShort(strlen($data));
-        $message->write($data);
+        $buffer->writeShort(strlen($data));
+        $buffer->write($data);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function read(Message $message): ?string
+    public function read(Buffer $buffer): ?string
     {
-        $length = $message->readShort();
+        $length = $buffer->readShort();
 
         if ($length < 0) {
             return null;
         }
 
-        return $message->read($length);
+        return $buffer->read($length);
     }
 
     /**

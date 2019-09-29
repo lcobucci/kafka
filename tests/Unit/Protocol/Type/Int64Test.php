@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Test\Unit\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int64;
@@ -22,20 +22,20 @@ final class Int64Test extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function writeShouldAppendTwoBytesToMessageForGivenNumber(): void
     {
-        $message = Message::allocate(16);
+        $buffer = Buffer::allocate(16);
 
         $type = new Int64();
-        $type->write(PHP_INT_MIN, $message);
-        $type->write(PHP_INT_MAX, $message);
+        $type->write(PHP_INT_MIN, $buffer);
+        $type->write(PHP_INT_MAX, $buffer);
 
-        $message->reset();
+        $buffer->reset();
 
-        self::assertSame(PHP_INT_MIN, $message->readLong());
-        self::assertSame(PHP_INT_MAX, $message->readLong());
+        self::assertSame(PHP_INT_MIN, $buffer->readLong());
+        self::assertSame(PHP_INT_MAX, $buffer->readLong());
     }
 
     /**
@@ -43,7 +43,7 @@ final class Int64Test extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
      */
     public function writeShouldNotHandleExceptionsFromMessage(): void
@@ -51,7 +51,7 @@ final class Int64Test extends TestCase
         $type = new Int64();
 
         $this->expectException(NotEnoughBytesAllocated::class);
-        $type->write(PHP_INT_MIN, Message::allocate(0));
+        $type->write(PHP_INT_MIN, Buffer::allocate(0));
     }
 
     /**
@@ -59,15 +59,15 @@ final class Int64Test extends TestCase
      *
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function readShouldReturnSignedNumbers(): void
     {
-        $message = Message::fromContent(pack('J2', PHP_INT_MIN, PHP_INT_MAX));
-        $type    = new Int64();
+        $buffer = Buffer::fromContent(pack('J2', PHP_INT_MIN, PHP_INT_MAX));
+        $type   = new Int64();
 
-        self::assertSame(PHP_INT_MIN, $type->read($message));
-        self::assertSame(PHP_INT_MAX, $type->read($message));
+        self::assertSame(PHP_INT_MIN, $type->read($buffer));
+        self::assertSame(PHP_INT_MAX, $type->read($buffer));
     }
 
     /**
@@ -75,7 +75,7 @@ final class Int64Test extends TestCase
      *
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
      */
     public function readShouldNotHandleExceptionsFromMessage(): void
@@ -83,7 +83,7 @@ final class Int64Test extends TestCase
         $type = new Int64();
 
         $this->expectException(NotEnoughBytesAllocated::class);
-        $type->read(Message::allocate(0));
+        $type->read(Buffer::allocate(0));
     }
 
     /**

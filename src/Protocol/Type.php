@@ -17,7 +17,7 @@ abstract class Type
      *
      * @throws NotEnoughBytesAllocated When size of given value is bigger than the remaining allocated bytes.
      */
-    abstract public function write($data, Message $message): void;
+    abstract public function write($data, Buffer $buffer): void;
 
     /**
      * Returns content from the message
@@ -26,7 +26,7 @@ abstract class Type
      *
      * @throws NotEnoughBytesAllocated When trying to read a content bigger than the remaining allocated bytes.
      */
-    abstract public function read(Message $message);
+    abstract public function read(Buffer $buffer);
 
     /**
      * Returns the number of bytes necessary for given value (so that data can be allocated properly)

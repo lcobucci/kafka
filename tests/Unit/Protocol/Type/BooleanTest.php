@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Test\Unit\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Boolean;
@@ -20,20 +20,20 @@ final class BooleanTest extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function writeShouldAppendASingleByteToMessageWithEitherZeroOrOne(): void
     {
-        $message = Message::allocate(2);
+        $buffer = Buffer::allocate(2);
 
         $type = new Boolean();
-        $type->write(true, $message);
-        $type->write(false, $message);
+        $type->write(true, $buffer);
+        $type->write(false, $buffer);
 
-        $message->reset();
+        $buffer->reset();
 
-        self::assertSame(1, $message->readByte());
-        self::assertSame(0, $message->readByte());
+        self::assertSame(1, $buffer->readByte());
+        self::assertSame(0, $buffer->readByte());
     }
 
     /**
@@ -41,18 +41,18 @@ final class BooleanTest extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function writeShouldConvertAnythingDifferentThanTrueToFalse(): void
     {
-        $message = Message::allocate(1);
+        $buffer = Buffer::allocate(1);
 
         $type = new Boolean();
-        $type->write('anything', $message);
+        $type->write('anything', $buffer);
 
-        $message->reset();
+        $buffer->reset();
 
-        self::assertSame(0, $message->readByte());
+        self::assertSame(0, $buffer->readByte());
     }
 
     /**
@@ -60,7 +60,7 @@ final class BooleanTest extends TestCase
      *
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
      */
     public function writeShouldNotHandleExceptionsFromMessage(): void
@@ -68,7 +68,7 @@ final class BooleanTest extends TestCase
         $type = new Boolean();
 
         $this->expectException(NotEnoughBytesAllocated::class);
-        $type->write(true, Message::allocate(0));
+        $type->write(true, Buffer::allocate(0));
     }
 
     /**
@@ -76,15 +76,15 @@ final class BooleanTest extends TestCase
      *
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function readShouldConvertZeroAndOneToTheirBooleanValue(): void
     {
-        $message = Message::fromContent(pack('c2', 0, 1));
-        $type    = new Boolean();
+        $buffer = Buffer::fromContent(pack('c2', 0, 1));
+        $type   = new Boolean();
 
-        self::assertFalse($type->read($message));
-        self::assertTrue($type->read($message));
+        self::assertFalse($type->read($buffer));
+        self::assertTrue($type->read($buffer));
     }
 
     /**
@@ -92,15 +92,15 @@ final class BooleanTest extends TestCase
      *
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      */
     public function readShouldConvertAnyNumberDifferentThanZeroToTrue(): void
     {
-        $message = Message::fromContent(pack('c2', -1, 2));
-        $type    = new Boolean();
+        $buffer = Buffer::fromContent(pack('c2', -1, 2));
+        $type   = new Boolean();
 
-        self::assertTrue($type->read($message));
-        self::assertTrue($type->read($message));
+        self::assertTrue($type->read($buffer));
+        self::assertTrue($type->read($buffer));
     }
 
     /**
@@ -108,7 +108,7 @@ final class BooleanTest extends TestCase
      *
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated
      */
     public function readShouldNotHandleExceptionsFromMessage(): void
@@ -116,7 +116,7 @@ final class BooleanTest extends TestCase
         $type = new Boolean();
 
         $this->expectException(NotEnoughBytesAllocated::class);
-        $type->read(Message::allocate(0));
+        $type->read(Buffer::allocate(0));
     }
 
     /**

@@ -25,24 +25,24 @@ final class Schema extends Type
     /**
      * {@inheritdoc}
      */
-    public function write($data, Message $message): void
+    public function write($data, Buffer $buffer): void
     {
         assert(is_array($data));
 
         foreach ($this->fields as $field) {
-            $field->writeTo($data, $message);
+            $field->writeTo($data, $buffer);
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function read(Message $message): array
+    public function read(Buffer $buffer): array
     {
         $structure = [];
 
         foreach ($this->fields as $field) {
-            $structure[$field->name()] = $field->readFrom($message);
+            $structure[$field->name()] = $field->readFrom($buffer);
         }
 
         return $structure;

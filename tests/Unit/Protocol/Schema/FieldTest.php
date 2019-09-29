@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Test\Unit\Protocol\Schema;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Schema\Field;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int8;
@@ -39,7 +39,7 @@ final class FieldTest extends TestCase
      * @covers ::extractValue
      * @covers \Lcobucci\Kafka\Protocol\SchemaValidationFailure::missingField
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Type
      * @uses \Lcobucci\Kafka\Protocol\Type\Int8
      */
@@ -50,7 +50,7 @@ final class FieldTest extends TestCase
         $this->expectException(SchemaValidationFailure::class);
         $this->expectExceptionMessage('Field "testing" missing from given structure');
 
-        $field->writeTo([], Message::allocate(1));
+        $field->writeTo([], Buffer::allocate(1));
     }
 
     /**
@@ -60,7 +60,7 @@ final class FieldTest extends TestCase
      * @covers ::writeTo
      * @covers ::extractValue
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Type\Int8
      */
     public function writeToShouldUseTypeToWriteIntoMessage(): void
@@ -68,11 +68,11 @@ final class FieldTest extends TestCase
         $type  = new Int8();
         $field = new Field('testing', $type);
 
-        $message = Message::allocate(1);
-        $field->writeTo(['testing' => 10], $message);
-        $message->reset();
+        $buffer = Buffer::allocate(1);
+        $field->writeTo(['testing' => 10], $buffer);
+        $buffer->reset();
 
-        self::assertSame(10, $type->read($message));
+        self::assertSame(10, $type->read($buffer));
     }
 
     /**
@@ -82,7 +82,7 @@ final class FieldTest extends TestCase
      * @covers ::writeTo
      * @covers ::extractValue
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Type
      * @uses \Lcobucci\Kafka\Protocol\Type\NullableString
      */
@@ -91,11 +91,11 @@ final class FieldTest extends TestCase
         $type  = new NullableString();
         $field = new Field('testing', $type);
 
-        $message = Message::allocate(2);
-        $field->writeTo([], $message);
-        $message->reset();
+        $buffer = Buffer::allocate(2);
+        $field->writeTo([], $buffer);
+        $buffer->reset();
 
-        self::assertNull($type->read($message));
+        self::assertNull($type->read($buffer));
     }
 
     /**
@@ -104,15 +104,15 @@ final class FieldTest extends TestCase
      * @covers ::__construct
      * @covers ::readFrom
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Type\Int8
      */
     public function readFromShouldUseTheTypeToReadFromTheMessage(): void
     {
-        $message = Message::fromContent(pack('c', 10));
-        $field   = new Field('testing', new Int8());
+        $buffer = Buffer::fromContent(pack('c', 10));
+        $field  = new Field('testing', new Int8());
 
-        self::assertSame(10, $field->readFrom($message));
+        self::assertSame(10, $field->readFrom($buffer));
     }
 
     /**

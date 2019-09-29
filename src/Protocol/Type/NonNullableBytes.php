@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Protocol\Type;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
 use function assert;
 
@@ -17,24 +17,24 @@ final class NonNullableBytes extends Type
     /**
      * {@inheritdoc}
      */
-    public function write($data, Message $message): void
+    public function write($data, Buffer $buffer): void
     {
-        assert($data instanceof Message);
+        assert($data instanceof Buffer);
 
         $length   = $data->remaining();
         $position = $data->position();
 
-        $message->writeInt($length);
-        $message->write($data->get($position, $length));
+        $buffer->writeInt($length);
+        $buffer->write($data->get($position, $length));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function read(Message $message): Message
+    public function read(Buffer $buffer): Buffer
     {
-        return Message::fromContent(
-            $message->read($message->readInt())
+        return Buffer::fromContent(
+            $buffer->read($buffer->readInt())
         );
     }
 
@@ -43,7 +43,7 @@ final class NonNullableBytes extends Type
      */
     public function sizeOf($data): int
     {
-        assert($data instanceof Message);
+        assert($data instanceof Buffer);
 
         return 4 + $data->remaining();
     }
@@ -53,8 +53,8 @@ final class NonNullableBytes extends Type
      */
     public function validate($data): void
     {
-        $this->guardAgainstNull($data, Message::class);
+        $this->guardAgainstNull($data, Buffer::class);
         $this->guardType($data, 'object', 'is_object');
-        $this->guardClass($data, Message::class);
+        $this->guardClass($data, Buffer::class);
     }
 }

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Protocol\Schema;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type;
@@ -42,9 +42,9 @@ final class Field
      * @throws SchemaValidationFailure When field is not nullable and missing from the structure.
      * @throws NotEnoughBytesAllocated When size of given value is bigger than the remaining allocated bytes.
      */
-    public function writeTo(array $structure, Message $message): void
+    public function writeTo(array $structure, Buffer $buffer): void
     {
-        $this->type->write($this->extractValue($structure), $message);
+        $this->type->write($this->extractValue($structure), $buffer);
     }
 
     /**
@@ -54,9 +54,9 @@ final class Field
      *
      * @throws NotEnoughBytesAllocated When trying to read a content bigger than the remaining allocated bytes.
      */
-    public function readFrom(Message $message)
+    public function readFrom(Buffer $buffer)
     {
-        return $this->type->read($message);
+        return $this->type->read($buffer);
     }
 
     /**

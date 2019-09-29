@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Test\Unit\Protocol;
 
-use Lcobucci\Kafka\Protocol\Message;
+use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Schema;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int8;
@@ -23,24 +23,24 @@ final class SchemaTest extends TestCase
      * @covers ::__construct
      * @covers ::write
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Schema\Field
      * @uses \Lcobucci\Kafka\Protocol\Type
      * @uses \Lcobucci\Kafka\Protocol\Type\Int8
      */
     public function writeShouldGoThroughEveryFieldAndAddDataToMessage(): void
     {
-        $message = Message::allocate(2);
-        $field1  = new Schema\Field('test1', new Int8());
-        $field2  = new Schema\Field('test2', new Int8());
+        $buffer = Buffer::allocate(2);
+        $field1 = new Schema\Field('test1', new Int8());
+        $field2 = new Schema\Field('test2', new Int8());
 
         $schema = new Schema($field1, $field2);
-        $schema->write(['test2' => 10, 'test1' => 1], $message);
+        $schema->write(['test2' => 10, 'test1' => 1], $buffer);
 
-        $message->reset();
+        $buffer->reset();
 
-        self::assertSame(1, $field1->readFrom($message));
-        self::assertSame(10, $field2->readFrom($message));
+        self::assertSame(1, $field1->readFrom($buffer));
+        self::assertSame(10, $field2->readFrom($buffer));
     }
 
     /**
@@ -49,20 +49,20 @@ final class SchemaTest extends TestCase
      * @covers ::__construct
      * @covers ::read
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Schema\Field
      * @uses \Lcobucci\Kafka\Protocol\Type
      * @uses \Lcobucci\Kafka\Protocol\Type\Int8
      */
     public function readShouldUseFieldDataToParseMessage(): void
     {
-        $message = Message::fromContent(pack('c2', 1, 10));
-        $schema  = new Schema(
+        $buffer = Buffer::fromContent(pack('c2', 1, 10));
+        $schema = new Schema(
             new Schema\Field('test1', new Int8()),
             new Schema\Field('test2', new Int8())
         );
 
-        self::assertSame(['test1' => 1, 'test2' => 10], $schema->read($message));
+        self::assertSame(['test1' => 1, 'test2' => 10], $schema->read($buffer));
     }
 
     /**
@@ -71,7 +71,7 @@ final class SchemaTest extends TestCase
      * @covers ::__construct
      * @covers ::sizeOf
      *
-     * @uses \Lcobucci\Kafka\Protocol\Message
+     * @uses \Lcobucci\Kafka\Protocol\Buffer
      * @uses \Lcobucci\Kafka\Protocol\Schema\Field
      * @uses \Lcobucci\Kafka\Protocol\Type
      * @uses \Lcobucci\Kafka\Protocol\Type\Int8
