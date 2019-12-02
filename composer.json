@@ -17,7 +17,7 @@
         "php-64bit": "^7.3"
     },
     "require-dev": {
-        "infection/infection": "^0.14.4",
+        "infection/infection": "^0.15.0",
         "lcobucci/coding-standard": "^3.1",
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-deprecation-rules": "^0.11",
