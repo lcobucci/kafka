@@ -22,9 +22,6 @@ final class Int8 extends Type
         $buffer->writeByte($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): int
     {
         return $buffer->readByte();

@@ -15,7 +15,7 @@ final class Schema extends Type
     /**
      * @var Field[]
      */
-    private $fields;
+    private array $fields;
 
     public function __construct(Field ...$fields)
     {

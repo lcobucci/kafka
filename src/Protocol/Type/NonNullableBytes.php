@@ -28,9 +28,6 @@ final class NonNullableBytes extends Type
         $buffer->write($data->get($position, $length));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): Buffer
     {
         return Buffer::fromContent(

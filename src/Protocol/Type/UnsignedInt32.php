@@ -22,9 +22,6 @@ final class UnsignedInt32 extends Type
         $buffer->writeUnsignedInt($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): int
     {
         return $buffer->readUnsignedInt();

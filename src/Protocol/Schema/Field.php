@@ -13,15 +13,9 @@ use Lcobucci\Kafka\Protocol\Type;
  */
 final class Field
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var Type
-     */
-    private $type;
+    private Type $type;
 
     public function __construct(string $name, Type $type)
     {

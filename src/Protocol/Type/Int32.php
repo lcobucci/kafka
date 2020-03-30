@@ -22,9 +22,6 @@ final class Int32 extends Type
         $buffer->writeInt($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): int
     {
         return $buffer->readInt();

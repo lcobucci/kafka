@@ -19,9 +19,6 @@ final class Int64 extends Type
         $buffer->writeLong($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): int
     {
         return $buffer->readLong();
