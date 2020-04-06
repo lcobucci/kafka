@@ -22,9 +22,6 @@ final class Boolean extends Type
         $buffer->writeByte($data === true ? 1 : 0);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): bool
     {
         return $buffer->readByte() !== 0;

@@ -9,15 +9,9 @@ use function count;
 
 final class ArrayOf extends Type
 {
-    /**
-     * @var Type
-     */
-    private $type;
+    private Type $type;
 
-    /**
-     * @var bool
-     */
-    private $nullable;
+    private bool $nullable;
 
     public function __construct(Type $type, bool $nullable = false)
     {
@@ -81,9 +75,6 @@ final class ArrayOf extends Type
         return $size;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isNullable(): bool
     {
         return $this->nullable;

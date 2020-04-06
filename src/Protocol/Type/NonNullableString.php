@@ -26,9 +26,6 @@ final class NonNullableString extends Type
         $buffer->write($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): string
     {
         return $buffer->read($buffer->readShort());

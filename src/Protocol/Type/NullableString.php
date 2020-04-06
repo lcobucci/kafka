@@ -33,9 +33,6 @@ final class NullableString extends Type
         $buffer->write($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): ?string
     {
         $length = $buffer->readShort();
@@ -59,9 +56,6 @@ final class NullableString extends Type
         return 2 + strlen($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isNullable(): bool
     {
         return true;

@@ -36,9 +36,6 @@ final class NullableBytes extends Type
         $buffer->write($data->get($position, $length));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): ?Buffer
     {
         $length = $buffer->readInt();
@@ -64,9 +61,6 @@ final class NullableBytes extends Type
         return 4 + $data->remaining();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isNullable(): bool
     {
         return true;

@@ -22,9 +22,6 @@ final class Int16 extends Type
         $buffer->writeShort($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function read(Buffer $buffer): int
     {
         return $buffer->readShort();

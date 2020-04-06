@@ -8,9 +8,9 @@ use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int64;
 use PHPUnit\Framework\TestCase;
+use function pack;
 use const PHP_INT_MAX;
 use const PHP_INT_MIN;
-use function pack;
 
 /**
  * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Int64
