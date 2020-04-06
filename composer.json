@@ -14,7 +14,7 @@
         "sort-packages": true
     },
     "require": {
-        "php-64bit": "^7.3"
+        "php-64bit": "^7.4 || ^8.0"
     },
     "require-dev": {
         "infection/infection": "^0.16.1",
