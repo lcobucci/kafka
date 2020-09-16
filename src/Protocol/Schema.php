@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Lcobucci\Kafka\Protocol;
 
 use Lcobucci\Kafka\Protocol\Schema\Field;
+
 use function assert;
 use function is_array;
 
@@ -12,9 +13,7 @@ use function is_array;
  */
 final class Schema extends Type
 {
-    /**
-     * @var Field[]
-     */
+    /** @var list<Field> */
     private array $fields;
 
     public function __construct(Field ...$fields)
@@ -22,9 +21,7 @@ final class Schema extends Type
         $this->fields = $fields;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function write($data, Buffer $buffer): void
     {
         assert(is_array($data));
@@ -50,9 +47,7 @@ final class Schema extends Type
         return $structure;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function sizeOf($data): int
     {
         assert(is_array($data));
@@ -66,9 +61,7 @@ final class Schema extends Type
         return $size;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function validate($data): void
     {
         $this->guardAgainstNull($data, 'array');

@@ -8,11 +8,10 @@ use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+
 use function get_class;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type */
 final class TypeTest extends TestCase
 {
     /**
@@ -211,9 +210,7 @@ final class TypeTest extends TestCase
         $type->validate('01234567891');
     }
 
-    /**
-     * @param mixed[] $validationRules
-     */
+    /** @param mixed[] $validationRules */
     private function createType(array $validationRules = []): Type
     {
         $type = $this->getMockForAbstractClass(Type::class);

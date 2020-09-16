@@ -10,11 +10,10 @@ use Lcobucci\Kafka\Protocol\Type\Int8;
 use Lcobucci\Kafka\Protocol\Type\NonNullableString;
 use Lcobucci\Kafka\Protocol\Type\NullableString;
 use PHPUnit\Framework\TestCase;
+
 use function pack;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Schema
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Schema */
 final class SchemaTest extends TestCase
 {
     /**

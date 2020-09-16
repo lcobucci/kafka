@@ -5,6 +5,7 @@ namespace Lcobucci\Kafka\Protocol;
 
 use Lcobucci\Kafka\Exception;
 use RuntimeException;
+
 use function get_class;
 use function gettype;
 use function sprintf;
@@ -19,9 +20,7 @@ final class SchemaValidationFailure extends RuntimeException implements Exceptio
         return new self(sprintf('Provided value is null, expected type: %s', $expectedType));
     }
 
-    /**
-     * @param mixed $data
-     */
+    /** @param mixed $data */
     public static function incorrectType($data, string $expectedType): self
     {
         return new self(

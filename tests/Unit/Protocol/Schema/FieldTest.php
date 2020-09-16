@@ -9,11 +9,10 @@ use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int8;
 use Lcobucci\Kafka\Protocol\Type\NullableString;
 use PHPUnit\Framework\TestCase;
+
 use function pack;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Schema\Field
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Schema\Field */
 final class FieldTest extends TestCase
 {
     /**

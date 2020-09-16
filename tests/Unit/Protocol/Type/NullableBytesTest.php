@@ -9,11 +9,10 @@ use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\NullableBytes;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+
 use function pack;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\NullableBytes
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\NullableBytes */
 final class NullableBytesTest extends TestCase
 {
     /**

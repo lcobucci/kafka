@@ -11,20 +11,4 @@
     <file>tests</file>
 
     <rule ref="Lcobucci" />
-
-<rule ref="SlevomatCodingStandard.Classes.ClassStructure">
-        <properties>
-                <property name="groups" type="array">
-                        <element value="uses"/>
-
-                        <element value="public constants, constants"/>
-                        <element value="public properties, protected properties, private properties, static properties"/>
-
-                        <element value="constructor"/>
-                        <element value="methods"/>
-                </property>
-        </properties>
-</rule>
-
-
 </ruleset>
