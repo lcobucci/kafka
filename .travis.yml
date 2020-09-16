@@ -1,4 +1,6 @@
 language: php
+os: linux
+dist: focal
 
 php:
   - 7.4
@@ -11,15 +13,18 @@ cache:
 before_install:
   - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{,.disabled} || echo "xdebug not available"
 
-install: travis_retry composer install
+install:
+  - |
+    if [ $TRAVIS_PHP_VERSION = 'nightly' ]; then
+      travis_retry composer install --ignore-platform-reqs;
+    else
+      travis_retry composer install;
+    fi
 
 script:
   - ./vendor/bin/phpunit --testsuite=unit
 
 jobs:
-  allow_failures:
-    - php: nightly
-
   include:
     - stage: Metrics and quality
       env: COVERAGE
