@@ -36,6 +36,8 @@ final class Schema extends Type
 
     /**
      * {@inheritdoc}
+     *
+     * @return array<string, mixed>
      */
     public function read(Buffer $buffer): array
     {

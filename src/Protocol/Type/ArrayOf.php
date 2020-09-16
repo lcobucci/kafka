@@ -39,6 +39,8 @@ final class ArrayOf extends Type
 
     /**
      * {@inheritdoc}
+     *
+     * @return list<mixed>
      */
     public function read(Buffer $buffer): ?array
     {
