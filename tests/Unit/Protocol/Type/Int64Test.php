@@ -8,13 +8,13 @@ use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int64;
 use PHPUnit\Framework\TestCase;
+
 use function pack;
+
 use const PHP_INT_MAX;
 use const PHP_INT_MIN;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Int64
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Int64 */
 final class Int64Test extends TestCase
 {
     /**

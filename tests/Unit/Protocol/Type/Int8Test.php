@@ -9,11 +9,10 @@ use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int8;
 use Lcobucci\Kafka\Protocol\ValueOutOfAllowedRange;
 use PHPUnit\Framework\TestCase;
+
 use function pack;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Int8
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Int8 */
 final class Int8Test extends TestCase
 {
     /**

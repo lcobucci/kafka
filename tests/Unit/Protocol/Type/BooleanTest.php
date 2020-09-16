@@ -8,11 +8,10 @@ use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Boolean;
 use PHPUnit\Framework\TestCase;
+
 use function pack;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Boolean
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Boolean */
 final class BooleanTest extends TestCase
 {
     /**

@@ -5,6 +5,7 @@ namespace Lcobucci\Kafka\Protocol\Type;
 
 use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
+
 use function strlen;
 
 /**
@@ -18,9 +19,7 @@ final class NullableString extends Type
 {
     private const MAX_LENGTH = 2 ** 15 - 1;
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function write($data, Buffer $buffer): void
     {
         if ($data === null) {
@@ -44,9 +43,7 @@ final class NullableString extends Type
         return $buffer->read($length);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function sizeOf($data): int
     {
         if ($data === null) {
@@ -61,9 +58,7 @@ final class NullableString extends Type
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function validate($data): void
     {
         $this->guardType($data, 'string', 'is_string');

@@ -8,12 +8,11 @@ use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\NullableString;
 use PHPUnit\Framework\TestCase;
+
 use function pack;
 use function str_repeat;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\NullableString
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\NullableString */
 final class NullableStringTest extends TestCase
 {
     /**

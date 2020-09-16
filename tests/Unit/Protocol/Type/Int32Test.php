@@ -9,11 +9,10 @@ use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int32;
 use Lcobucci\Kafka\Protocol\ValueOutOfAllowedRange;
 use PHPUnit\Framework\TestCase;
+
 use function pack;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Int32
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Int32 */
 final class Int32Test extends TestCase
 {
     /**

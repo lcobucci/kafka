@@ -5,6 +5,7 @@ namespace Lcobucci\Kafka\Protocol;
 
 use Lcobucci\Kafka\Exception;
 use RangeException;
+
 use function sprintf;
 
 final class ValueOutOfAllowedRange extends RangeException implements Exception

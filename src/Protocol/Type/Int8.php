@@ -14,9 +14,7 @@ final class Int8 extends Type
     private const MIN = -2 ** 7;
     private const MAX = 2 ** 7 - 1;
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function write($data, Buffer $buffer): void
     {
         $buffer->writeByte($data);
@@ -27,17 +25,13 @@ final class Int8 extends Type
         return $buffer->readByte();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function sizeOf($data): int
+    /** {@inheritdoc} */
+    public function sizeOf($data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return 1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function validate($data): void
     {
         $this->guardAgainstNull($data, 'integer');

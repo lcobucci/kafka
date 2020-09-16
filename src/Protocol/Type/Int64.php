@@ -11,9 +11,7 @@ use Lcobucci\Kafka\Protocol\Type;
  */
 final class Int64 extends Type
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function write($data, Buffer $buffer): void
     {
         $buffer->writeLong($data);
@@ -24,17 +22,13 @@ final class Int64 extends Type
         return $buffer->readLong();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function sizeOf($data): int
+    /** {@inheritdoc} */
+    public function sizeOf($data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return 8;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function validate($data): void
     {
         $this->guardAgainstNull($data, 'integer');

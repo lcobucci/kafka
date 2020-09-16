@@ -26,9 +26,7 @@ final class Buffer
     private const CONVERSION_INT   = [2 ** 31 - 1, 2 ** 32];
 
     private string $bytes;
-
     private int $length;
-
     private int $position = 0;
 
     private function __construct(string $bytes, int $length)

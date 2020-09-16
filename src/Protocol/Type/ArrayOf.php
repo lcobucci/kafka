@@ -5,12 +5,12 @@ namespace Lcobucci\Kafka\Protocol\Type;
 
 use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
+
 use function count;
 
 final class ArrayOf extends Type
 {
     private Type $type;
-
     private bool $nullable;
 
     public function __construct(Type $type, bool $nullable = false)
@@ -19,9 +19,7 @@ final class ArrayOf extends Type
         $this->nullable = $nullable;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function write($data, Buffer $buffer): void
     {
         if ($data === null) {
@@ -39,6 +37,8 @@ final class ArrayOf extends Type
 
     /**
      * {@inheritdoc}
+     *
+     * @return list<mixed>
      */
     public function read(Buffer $buffer): ?array
     {
@@ -57,9 +57,7 @@ final class ArrayOf extends Type
         return $items;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function sizeOf($data): int
     {
         if ($data === null) {
@@ -80,9 +78,7 @@ final class ArrayOf extends Type
         return $this->nullable;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function validate($data): void
     {
         if (! $this->nullable) {

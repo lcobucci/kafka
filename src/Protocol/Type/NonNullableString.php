@@ -5,6 +5,7 @@ namespace Lcobucci\Kafka\Protocol\Type;
 
 use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
+
 use function strlen;
 
 /**
@@ -17,9 +18,7 @@ final class NonNullableString extends Type
 {
     private const MAX_LENGTH = 2 ** 15 - 1;
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function write($data, Buffer $buffer): void
     {
         $buffer->writeShort(strlen($data));
@@ -31,17 +30,13 @@ final class NonNullableString extends Type
         return $buffer->read($buffer->readShort());
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function sizeOf($data): int
     {
         return 2 + strlen($data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function validate($data): void
     {
         $this->guardAgainstNull($data, 'string');

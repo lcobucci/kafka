@@ -9,11 +9,10 @@ use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\ArrayOf;
 use Lcobucci\Kafka\Protocol\Type\Boolean;
 use PHPUnit\Framework\TestCase;
+
 use function pack;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\ArrayOf
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\ArrayOf */
 final class ArrayOfTest extends TestCase
 {
     /**

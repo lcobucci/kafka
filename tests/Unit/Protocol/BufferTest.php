@@ -7,11 +7,10 @@ use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\NotEnoughBytesAllocated;
 use Lcobucci\Kafka\Protocol\ValueOutOfAllowedRange;
 use PHPUnit\Framework\TestCase;
+
 use function bin2hex;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Buffer
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Buffer */
 final class BufferTest extends TestCase
 {
     /**

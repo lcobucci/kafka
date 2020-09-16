@@ -6,10 +6,13 @@
         ]
     },
     "logs": {
-        "text": "infection-log.txt"
+        "text": "infection.log"
     },
     "mutators": {
         "@default": true,
         "@function_signature": true
-    }
+    },
+    "testFrameworkOptions": "--testsuite=unit",
+    "minMsi": 98,
+    "minCoveredMsi": 98
 }

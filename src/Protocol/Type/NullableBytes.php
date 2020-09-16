@@ -5,6 +5,7 @@ namespace Lcobucci\Kafka\Protocol\Type;
 
 use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
+
 use function assert;
 
 /**
@@ -16,9 +17,7 @@ use function assert;
  */
 final class NullableBytes extends Type
 {
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function write($data, Buffer $buffer): void
     {
         if ($data === null) {
@@ -47,9 +46,7 @@ final class NullableBytes extends Type
         return Buffer::fromContent($buffer->read($length));
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function sizeOf($data): int
     {
         if ($data === null) {
@@ -66,9 +63,7 @@ final class NullableBytes extends Type
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function validate($data): void
     {
         $this->guardType($data, 'object', 'is_object');

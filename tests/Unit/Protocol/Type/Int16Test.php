@@ -9,11 +9,10 @@ use Lcobucci\Kafka\Protocol\SchemaValidationFailure;
 use Lcobucci\Kafka\Protocol\Type\Int16;
 use Lcobucci\Kafka\Protocol\ValueOutOfAllowedRange;
 use PHPUnit\Framework\TestCase;
+
 use function pack;
 
-/**
- * @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Int16
- */
+/** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type\Int16 */
 final class Int16Test extends TestCase
 {
     /**
