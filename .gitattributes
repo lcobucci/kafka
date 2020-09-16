@@ -7,3 +7,4 @@
 /.*.yml         export-ignore
 /*.dist         export-ignore
 /*.md           export-ignore
+/composer.lock  export-ignore

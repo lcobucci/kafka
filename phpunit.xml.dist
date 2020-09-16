@@ -8,19 +8,21 @@
     beStrictAboutChangesToGlobalState="true"
     beStrictAboutCoversAnnotation="true"
     beStrictAboutResourceUsageDuringSmallTests="true"
-    forceCoversAnnotation="true">
-	<testsuites>
-		<testsuite name="unit">
-			<directory>tests/Unit</directory>
-		</testsuite>
-		<testsuite name="functional">
-			<directory>tests/Functional</directory>
-		</testsuite>
-	</testsuites>
+    forceCoversAnnotation="true"
+>
+    <testsuites>
+        <testsuite name="unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
 
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+        <testsuite name="functional">
+            <directory>tests/Functional</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage processUncoveredFiles="true">
+        <include>
             <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 </phpunit>

@@ -3,6 +3,5 @@
 /phpcs.xml
 /phpunit.xml
 /phpstan.neon
-/infection-log.txt
-/composer.lock
+/infection.log
 .phpunit.result.cache
