@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+    - "2181"
+
+  kafka1:
+    image: wurstmeister/kafka:2.13-2.6.0
+    ports:
+    - "9092:9092"
+    environment:
+      HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "testing_topic:5:1"
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
