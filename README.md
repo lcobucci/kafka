@@ -5,7 +5,7 @@
 [![Unstable Version]](https://packagist.org/packages/lcobucci/kafka)
 
 
-[![Build Status]](https://github.com/lcobucci/kafka/actions?query=workflow%3A%22PHPUnit%20Tests%22+branch%3Amaster)
+[![Build Status]](https://github.com/lcobucci/kafka/actions?query=workflow%3A%22PHPUnit%20Tests%22+branch%3A0.1.x)
 [![Code Coverage]](https://codecov.io/gh/lcobucci/kafka)
 
 A library to allow people to communicate to Kafka using plain PHP, compatible with
@@ -38,8 +38,8 @@ MIT, see [LICENSE].
 [Total Downloads]: https://img.shields.io/packagist/dt/lcobucci/kafka.svg?style=flat-square
 [Latest Stable Version]: https://img.shields.io/packagist/v/lcobucci/kafka.svg?style=flat-square
 [Unstable Version]: https://img.shields.io/packagist/vpre/lcobucci/kafka.svg?style=flat-square
-[Build Status]: https://img.shields.io/github/workflow/status/lcobucci/kafka/PHPUnit%20tests/master?style=flat-square
-[Code Coverage]: https://codecov.io/gh/lcobucci/kafka/branch/master/graph/badge.svg
+[Build Status]: https://img.shields.io/github/workflow/status/lcobucci/kafka/PHPUnit%20tests/0.1.x?style=flat-square
+[Code Coverage]: https://codecov.io/gh/lcobucci/kafka/branch/0.1.x/graph/badge.svg
 [Packagist]: http://packagist.org/packages/lcobucci/kafka
 [Composer]: http://getcomposer.org
 [LICENSE]: LICENSE

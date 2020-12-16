@@ -35,10 +35,5 @@
         "psr-4": {
             "Lcobucci\\Kafka\\Test\\": "tests/"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.1-dev"
-        }
     }
 }
