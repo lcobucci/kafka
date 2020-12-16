@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Lcobucci\Kafka\Protocol;
 
+use function assert;
+use function is_array;
 use function pack;
 use function str_repeat;
 use function strlen;
@@ -180,7 +182,7 @@ final class Buffer
      */
     public function readByte(): int
     {
-        return unpack('c', $this->read(1))[1];
+        return $this->unpack('c', $this->read(1));
     }
 
     /**
@@ -202,7 +204,7 @@ final class Buffer
      */
     public function readShort(): int
     {
-        return $this->convertToSigned(unpack('n', $this->read(2))[1], ...self::CONVERSION_SHORT);
+        return $this->convertToSigned($this->unpack('n', $this->read(2)), ...self::CONVERSION_SHORT);
     }
 
     /**
@@ -236,7 +238,7 @@ final class Buffer
      */
     public function readInt(): int
     {
-        return $this->convertToSigned(unpack('N', $this->read(4))[1], ...self::CONVERSION_INT);
+        return $this->convertToSigned($this->unpack('N', $this->read(4)), ...self::CONVERSION_INT);
     }
 
     /**
@@ -258,7 +260,7 @@ final class Buffer
      */
     public function readUnsignedInt(): int
     {
-        return unpack('N', $this->read(4))[1];
+        return $this->unpack('N', $this->read(4));
     }
 
     /**
@@ -283,6 +285,14 @@ final class Buffer
      */
     public function readLong(): int
     {
-        return unpack('J', $this->read(8))[1];
+        return $this->unpack('J', $this->read(8));
+    }
+
+    private function unpack(string $format, string $data): int
+    {
+        $unpacked = unpack($format, $data);
+        assert(is_array($unpacked));
+
+        return $unpacked[1];
     }
 }

@@ -6,8 +6,6 @@ namespace Lcobucci\Kafka\Protocol\Type;
 use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
 
-use function assert;
-
 /**
  * Represents a raw sequence of bytes or null.
  *
@@ -20,13 +18,11 @@ final class NullableBytes extends Type
     /** {@inheritdoc} */
     public function write($data, Buffer $buffer): void
     {
-        if ($data === null) {
+        if (! $data instanceof Buffer) {
             $buffer->writeInt(-1);
 
             return;
         }
-
-        assert($data instanceof Buffer);
 
         $length   = $data->remaining();
         $position = $data->position();
@@ -49,11 +45,9 @@ final class NullableBytes extends Type
     /** {@inheritdoc} */
     public function sizeOf($data): int
     {
-        if ($data === null) {
+        if (! $data instanceof Buffer) {
             return 4;
         }
-
-        assert($data instanceof Buffer);
 
         return 4 + $data->remaining();
     }

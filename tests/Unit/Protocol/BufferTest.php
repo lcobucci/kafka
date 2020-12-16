@@ -287,6 +287,7 @@ final class BufferTest extends TestCase
      *
      * @covers ::readByte
      * @covers ::reset
+     * @covers ::unpack
      *
      * @uses \Lcobucci\Kafka\Protocol\Buffer::__construct()
      * @uses \Lcobucci\Kafka\Protocol\Buffer::allocate()
@@ -402,6 +403,7 @@ final class BufferTest extends TestCase
      * @covers ::readShort
      * @covers ::reset
      * @covers ::convertToSigned
+     * @covers ::unpack
      *
      * @uses \Lcobucci\Kafka\Protocol\Buffer::__construct()
      * @uses \Lcobucci\Kafka\Protocol\Buffer::allocate()
@@ -517,6 +519,7 @@ final class BufferTest extends TestCase
      * @covers ::readInt
      * @covers ::reset
      * @covers ::convertToSigned
+     * @covers ::unpack
      *
      * @uses \Lcobucci\Kafka\Protocol\Buffer::__construct()
      * @uses \Lcobucci\Kafka\Protocol\Buffer::allocate()
@@ -631,6 +634,7 @@ final class BufferTest extends TestCase
      *
      * @covers ::readUnsignedInt
      * @covers ::reset
+     * @covers ::unpack
      *
      * @uses \Lcobucci\Kafka\Protocol\Buffer::__construct()
      * @uses \Lcobucci\Kafka\Protocol\Buffer::allocate()
@@ -700,6 +704,7 @@ final class BufferTest extends TestCase
      *
      * @covers ::readLong
      * @covers ::reset
+     * @covers ::unpack
      *
      * @uses \Lcobucci\Kafka\Protocol\Buffer::__construct()
      * @uses \Lcobucci\Kafka\Protocol\Buffer::allocate()
