@@ -7,6 +7,7 @@ use Lcobucci\Kafka\Protocol\Buffer;
 use Lcobucci\Kafka\Protocol\Type;
 
 use function assert;
+use function is_a;
 
 /**
  * Represents a raw sequence of bytes.
@@ -18,7 +19,7 @@ final class NonNullableBytes extends Type
     /** {@inheritdoc} */
     public function write($data, Buffer $buffer): void
     {
-        assert($data instanceof Buffer);
+        assert(is_a($data, Buffer::class));
 
         $length   = $data->remaining();
         $position = $data->position();
@@ -37,7 +38,7 @@ final class NonNullableBytes extends Type
     /** {@inheritdoc} */
     public function sizeOf($data): int
     {
-        assert($data instanceof Buffer);
+        assert(is_a($data, Buffer::class));
 
         return 4 + $data->remaining();
     }

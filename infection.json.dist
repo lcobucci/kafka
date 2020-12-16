@@ -13,6 +13,6 @@
         "@function_signature": true
     },
     "testFrameworkOptions": "--testsuite=unit",
-    "minMsi": 99,
-    "minCoveredMsi": 99
+    "minMsi": 100,
+    "minCoveredMsi": 100
 }
