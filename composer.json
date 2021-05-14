@@ -17,7 +17,7 @@
         "php-64bit": "^8.0"
     },
     "require-dev": {
-        "infection/infection": "^0.22",
+        "infection/infection": "^0.23",
         "lcobucci/coding-standard": "^6.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^0.12",
