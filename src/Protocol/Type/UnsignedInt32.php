@@ -14,8 +14,7 @@ final class UnsignedInt32 extends Type
     private const MIN = 0;
     private const MAX = 2 ** 32 - 1;
 
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         $buffer->writeUnsignedInt($data);
     }
@@ -25,14 +24,12 @@ final class UnsignedInt32 extends Type
         return $buffer->readUnsignedInt();
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+    public function sizeOf(mixed $data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return 4;
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         $this->guardAgainstNull($data, 'integer');
         $this->guardType($data, 'integer', 'is_int');

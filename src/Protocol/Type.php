@@ -13,34 +13,28 @@ abstract class Type
     /**
      * Writes given data to the message
      *
-     * @param mixed $data
-     *
      * @throws NotEnoughBytesAllocated When size of given value is bigger than the remaining allocated bytes.
      */
-    abstract public function write($data, Buffer $buffer): void;
+    abstract public function write(mixed $data, Buffer $buffer): void;
 
     /**
      * Returns content from the message
      *
-     * @return mixed
-     *
      * @throws NotEnoughBytesAllocated When trying to read a content bigger than the remaining allocated bytes.
      */
-    abstract public function read(Buffer $buffer);
+    abstract public function read(Buffer $buffer): mixed;
 
     /**
      * Returns the number of bytes necessary for given value (so that data can be allocated properly)
-     *
-     * @param mixed $data
      */
-    abstract public function sizeOf($data): int;
+    abstract public function sizeOf(mixed $data): int;
 
     /**
      * Validates given value according to type's rules
      *
-     * @param mixed $data
+     * @throws SchemaValidationFailure
      */
-    abstract public function validate($data): void;
+    abstract public function validate(mixed $data): void;
 
     /**
      * Returns if the current type allows null values
@@ -53,11 +47,9 @@ abstract class Type
     /**
      * Ensures that given value is not null
      *
-     * @param mixed $data
-     *
      * @throws SchemaValidationFailure
      */
-    final protected function guardAgainstNull($data, string $expectedType): void
+    final protected function guardAgainstNull(mixed $data, string $expectedType): void
     {
         if ($data === null) {
             throw SchemaValidationFailure::nullValue($expectedType);
@@ -67,11 +59,9 @@ abstract class Type
     /**
      * Ensures that given value matches expected type
      *
-     * @param mixed $data
-     *
      * @throws SchemaValidationFailure
      */
-    final protected function guardType($data, string $expectType, callable $validator): void
+    final protected function guardType(mixed $data, string $expectType, callable $validator): void
     {
         if ($data !== null && ! $validator($data)) {
             throw SchemaValidationFailure::incorrectType($data, $expectType);

@@ -14,8 +14,7 @@ use Lcobucci\Kafka\Protocol\Type;
  */
 final class Boolean extends Type
 {
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         $buffer->writeByte($data === true ? 1 : 0);
     }
@@ -25,14 +24,12 @@ final class Boolean extends Type
         return $buffer->readByte() !== 0;
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+    public function sizeOf(mixed $data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return 1;
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         $this->guardAgainstNull($data, 'boolean');
         $this->guardType($data, 'boolean', 'is_bool');

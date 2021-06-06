@@ -43,11 +43,9 @@ final class Field
     /**
      * Reads content from message using field type
      *
-     * @return mixed
-     *
      * @throws NotEnoughBytesAllocated When trying to read a content bigger than the remaining allocated bytes.
      */
-    public function readFrom(Buffer $buffer)
+    public function readFrom(Buffer $buffer): mixed
     {
         return $this->type->read($buffer);
     }
@@ -67,7 +65,7 @@ final class Field
     /**
      * Ensures that given data is valid
      *
-     * @param mixed[] $structure
+     * @param array<string, mixed> $structure
      *
      * @throws SchemaValidationFailure When field is not nullable and missing from the structure, or data is invalid.
      */
@@ -79,13 +77,11 @@ final class Field
     /**
      * Returns the value for the field, falling back to null (when possible)
      *
-     * @param mixed[] $structure
-     *
-     * @return mixed
+     * @param array<string, mixed> $structure
      *
      * @throws SchemaValidationFailure When field is not nullable and missing from the structure.
      */
-    private function extractValue(array $structure)
+    private function extractValue(array $structure): mixed
     {
         if (! isset($structure[$this->name]) && ! $this->type->isNullable()) {
             throw SchemaValidationFailure::missingField($this->name);

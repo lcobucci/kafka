@@ -11,8 +11,7 @@ use Lcobucci\Kafka\Protocol\Type;
  */
 final class Int64 extends Type
 {
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         $buffer->writeLong($data);
     }
@@ -22,14 +21,12 @@ final class Int64 extends Type
         return $buffer->readLong();
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+    public function sizeOf(mixed $data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return 8;
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         $this->guardAgainstNull($data, 'integer');
         $this->guardType($data, 'integer', 'is_int');

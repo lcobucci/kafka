@@ -140,11 +140,9 @@ final class Buffer
     /**
      * Reads an amount of bytes from the current position
      *
-     * @return mixed
-     *
      * @throws NotEnoughBytesAllocated When trying to read from an invalid position.
      */
-    public function read(int $length)
+    public function read(int $length): mixed
     {
         $offset = $this->nextIndex($length);
 

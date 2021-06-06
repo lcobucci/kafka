@@ -18,8 +18,7 @@ final class NonNullableString extends Type
 {
     private const MAX_LENGTH = 2 ** 15 - 1;
 
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         $buffer->writeShort(strlen($data));
         $buffer->write($data);
@@ -30,14 +29,12 @@ final class NonNullableString extends Type
         return $buffer->read($buffer->readShort());
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int
+    public function sizeOf(mixed $data): int
     {
         return 2 + strlen($data);
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         $this->guardAgainstNull($data, 'string');
         $this->guardType($data, 'string', 'is_string');
