@@ -21,8 +21,7 @@ final class Schema extends Type
         $this->fields = $fields;
     }
 
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         assert(is_array($data));
 
@@ -32,9 +31,9 @@ final class Schema extends Type
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array<string, mixed>
+     *
+     * @inheritdoc
      */
     public function read(Buffer $buffer): array
     {
@@ -47,8 +46,7 @@ final class Schema extends Type
         return $structure;
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int
+    public function sizeOf(mixed $data): int
     {
         assert(is_array($data));
 
@@ -61,8 +59,7 @@ final class Schema extends Type
         return $size;
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         $this->guardAgainstNull($data, 'array');
         $this->guardType($data, 'array', 'is_array');
@@ -73,7 +70,7 @@ final class Schema extends Type
     }
 
     /**
-     * @param mixed[] $data
+     * @param array<string, mixed> $data
      *
      * @throws SchemaValidationFailure When value is not valid for given field.
      */

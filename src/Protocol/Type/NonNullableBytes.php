@@ -16,8 +16,7 @@ use function is_a;
  */
 final class NonNullableBytes extends Type
 {
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         assert(is_a($data, Buffer::class));
 
@@ -35,16 +34,14 @@ final class NonNullableBytes extends Type
         );
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int
+    public function sizeOf(mixed $data): int
     {
         assert(is_a($data, Buffer::class));
 
         return 4 + $data->remaining();
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         $this->guardAgainstNull($data, Buffer::class);
         $this->guardType($data, 'object', 'is_object');

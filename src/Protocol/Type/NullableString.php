@@ -19,8 +19,7 @@ final class NullableString extends Type
 {
     private const MAX_LENGTH = 2 ** 15 - 1;
 
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         if ($data === null) {
             $buffer->writeShort(-1);
@@ -43,8 +42,7 @@ final class NullableString extends Type
         return $buffer->read($length);
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int
+    public function sizeOf(mixed $data): int
     {
         if ($data === null) {
             return 2;
@@ -58,8 +56,7 @@ final class NullableString extends Type
         return true;
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         $this->guardType($data, 'string', 'is_string');
         $this->guardLength($data, self::MAX_LENGTH);

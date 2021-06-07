@@ -14,8 +14,7 @@ final class Int32 extends Type
     private const MIN = -2 ** 31;
     private const MAX = 2 ** 31 - 1;
 
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         $buffer->writeInt($data);
     }
@@ -25,14 +24,12 @@ final class Int32 extends Type
         return $buffer->readInt();
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
+    public function sizeOf(mixed $data): int // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter
     {
         return 4;
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         $this->guardAgainstNull($data, 'integer');
         $this->guardType($data, 'integer', 'is_int');

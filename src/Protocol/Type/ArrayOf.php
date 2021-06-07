@@ -19,8 +19,7 @@ final class ArrayOf extends Type
         $this->nullable = $nullable;
     }
 
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         if ($data === null) {
             $buffer->writeInt(-1);
@@ -36,9 +35,9 @@ final class ArrayOf extends Type
     }
 
     /**
-     * {@inheritdoc}
+     * @return list<mixed>|null
      *
-     * @return list<mixed>
+     * @inheritdoc
      */
     public function read(Buffer $buffer): ?array
     {
@@ -57,8 +56,7 @@ final class ArrayOf extends Type
         return $items;
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int
+    public function sizeOf(mixed $data): int
     {
         if ($data === null) {
             return 4;
@@ -78,8 +76,7 @@ final class ArrayOf extends Type
         return $this->nullable;
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         if (! $this->nullable) {
             $this->guardAgainstNull($data, 'array');

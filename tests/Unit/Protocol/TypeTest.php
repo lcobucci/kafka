@@ -9,8 +9,6 @@ use Lcobucci\Kafka\Protocol\Type;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-use function get_class;
-
 /** @coversDefaultClass \Lcobucci\Kafka\Protocol\Type */
 final class TypeTest extends TestCase
 {
@@ -227,7 +225,7 @@ final class TypeTest extends TestCase
 
         $type->expects(self::once())
              ->method('validate')
-             ->willReturnCallback($callback->bindTo($type, get_class($type)));
+             ->willReturnCallback($callback->bindTo($type, $type::class));
 
         return $type;
     }

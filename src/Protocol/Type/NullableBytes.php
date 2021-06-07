@@ -15,8 +15,7 @@ use Lcobucci\Kafka\Protocol\Type;
  */
 final class NullableBytes extends Type
 {
-    /** {@inheritdoc} */
-    public function write($data, Buffer $buffer): void
+    public function write(mixed $data, Buffer $buffer): void
     {
         if (! $data instanceof Buffer) {
             $buffer->writeInt(-1);
@@ -42,8 +41,7 @@ final class NullableBytes extends Type
         return Buffer::fromContent($buffer->read($length));
     }
 
-    /** {@inheritdoc} */
-    public function sizeOf($data): int
+    public function sizeOf(mixed $data): int
     {
         if (! $data instanceof Buffer) {
             return 4;
@@ -57,8 +55,7 @@ final class NullableBytes extends Type
         return true;
     }
 
-    /** {@inheritdoc} */
-    public function validate($data): void
+    public function validate(mixed $data): void
     {
         $this->guardType($data, 'object', 'is_object');
         $this->guardClass($data, Buffer::class);
