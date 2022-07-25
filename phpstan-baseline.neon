@@ -1,0 +1,141 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#2 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:unpack\\(\\) expects string, mixed given\\.$#"
+			count: 5
+			path: src/Protocol/Buffer.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\:\\:validateField\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Schema.php
+
+		-
+			message: "#^Property Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\:\\:\\$fields \\(array\\<int, Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\\\Field\\>\\) does not accept array\\<int\\|string, Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\\\Field\\>\\.$#"
+			count: 1
+			path: src/Protocol/Schema.php
+
+		-
+			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/SchemaValidationFailure.php
+
+		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 3
+			path: src/Protocol/Type/ArrayOf.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/ArrayOf.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardRange\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/Int16.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:writeShort\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/Int16.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardRange\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/Int32.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:writeInt\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/Int32.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:writeLong\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/Int64.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardRange\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/Int8.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:writeByte\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/Int8.php
+
+		-
+			message: "#^Parameter \\#1 \\$content of static method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:fromContent\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/NonNullableBytes.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardClass\\(\\) expects object\\|null, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/NonNullableBytes.php
+
+		-
+			message: "#^Parameter \\#1 \\$object_or_class of function is_a expects object, mixed given\\.$#"
+			count: 2
+			path: src/Protocol/Type/NonNullableBytes.php
+
+		-
+			message: "#^Method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\\\NonNullableString\\:\\:read\\(\\) should return string but returns mixed\\.$#"
+			count: 1
+			path: src/Protocol/Type/NonNullableString.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardLength\\(\\) expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/NonNullableString.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function strlen expects string, mixed given\\.$#"
+			count: 2
+			path: src/Protocol/Type/NonNullableString.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:write\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/NonNullableString.php
+
+		-
+			message: "#^Parameter \\#1 \\$content of static method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:fromContent\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/NullableBytes.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardClass\\(\\) expects object\\|null, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/NullableBytes.php
+
+		-
+			message: "#^Method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\\\NullableString\\:\\:read\\(\\) should return string\\|null but returns mixed\\.$#"
+			count: 1
+			path: src/Protocol/Type/NullableString.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardLength\\(\\) expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/NullableString.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function strlen expects string, mixed given\\.$#"
+			count: 2
+			path: src/Protocol/Type/NullableString.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:write\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/NullableString.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardRange\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/UnsignedInt32.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:writeUnsignedInt\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Type/UnsignedInt32.php
