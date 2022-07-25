@@ -17,8 +17,8 @@ final class ValueOutOfAllowedRange extends RangeException implements Exception
                 'Given value (%s) is out of the expected range [%s, %s]',
                 $value,
                 $lowerBound,
-                $upperBound
-            )
+                $upperBound,
+            ),
         );
     }
 }

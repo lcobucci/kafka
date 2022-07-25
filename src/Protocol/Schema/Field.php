@@ -13,13 +13,8 @@ use Lcobucci\Kafka\Protocol\Type;
  */
 final class Field
 {
-    private string $name;
-    private Type $type;
-
-    public function __construct(string $name, Type $type)
+    public function __construct(private string $name, private Type $type)
     {
-        $this->name = $name;
-        $this->type = $type;
     }
 
     public function name(): string

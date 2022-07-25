@@ -21,13 +21,13 @@
     "require": {
         "php-64bit": "^8.1",
         "ext-pcntl": "*",
-        "psr/log": "^1.1",
+        "psr/log": "^3.0",
         "react/socket": "^1.6"
     },
     "require-dev": {
-        "infection/infection": "^0.23",
-        "lcobucci/coding-standard": "^7.0",
-        "monolog/monolog": "^2.2",
+        "infection/infection": "^0.26",
+        "lcobucci/coding-standard": "^8.0",
+        "monolog/monolog": "^3.2",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^1.8",
         "phpstan/phpstan-deprecation-rules": "^1.0",

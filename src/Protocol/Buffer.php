@@ -27,14 +27,10 @@ final class Buffer
     private const CONVERSION_SHORT = [2 ** 15 - 1, 2 ** 16];
     private const CONVERSION_INT   = [2 ** 31 - 1, 2 ** 32];
 
-    private string $bytes;
-    private int $length;
     private int $position = 0;
 
-    private function __construct(string $bytes, int $length)
+    private function __construct(private string $bytes, private int $length)
     {
-        $this->bytes  = $bytes;
-        $this->length = $length;
     }
 
     /**

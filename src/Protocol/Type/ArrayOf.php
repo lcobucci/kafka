@@ -10,13 +10,8 @@ use function count;
 
 final class ArrayOf extends Type
 {
-    private Type $type;
-    private bool $nullable;
-
-    public function __construct(Type $type, bool $nullable = false)
+    public function __construct(private Type $type, private bool $nullable = false)
     {
-        $this->type     = $type;
-        $this->nullable = $nullable;
     }
 
     public function write(mixed $data, Buffer $buffer): void
