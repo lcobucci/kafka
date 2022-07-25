@@ -1,7 +1,7 @@
 PARALLELISM := $(shell nproc)
 
 .PHONY: all
-all: install phpcbf phpcs phpstan phpunit infection
+all: install phpcbf phpcs phpstan phpunit behat infection
 
 .PHONY: install
 install: vendor/composer/installed.json
@@ -14,6 +14,10 @@ vendor/composer/installed.json: composer.json composer.lock
 phpunit:
 	@php -d zend.assertions=1 vendor/bin/phpunit --testsuite=unit
 
+.PHONY: behat
+behat:
+	@php -d zend.assertions=1 vendor/bin/behat
+
 .PHONY: infection
 infection:
 	@php -d zend.assertions=1 -d xdebug.mode=coverage vendor/bin/phpunit --testsuite=unit --coverage-xml=build/coverage-xml --log-junit=build/junit.xml $(PHPUNIT_FLAGS)
@@ -21,7 +25,7 @@ infection:
 
 .PHONY: phpcbf
 phpcbf:
-	@vendor/bin/phpcbf --parallel=$(PARALLELISM)
+	@vendor/bin/phpcbf --parallel=$(PARALLELISM) || true
 
 .PHONY: phpcs
 phpcs:

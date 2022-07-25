@@ -1,0 +1,8 @@
+default:
+  gherkin:
+    filters:
+      tags: ~@wip
+
+  suites:
+    acceptance:
+      contexts: []
