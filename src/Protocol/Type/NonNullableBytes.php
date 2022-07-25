@@ -30,7 +30,7 @@ final class NonNullableBytes extends Type
     public function read(Buffer $buffer): Buffer
     {
         return Buffer::fromContent(
-            $buffer->read($buffer->readInt())
+            $buffer->read($buffer->readInt()),
         );
     }
 

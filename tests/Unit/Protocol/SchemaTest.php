@@ -58,7 +58,7 @@ final class SchemaTest extends TestCase
         $buffer = Buffer::fromContent(pack('c2', 1, 10));
         $schema = new Schema(
             new Schema\Field('test1', new Int8()),
-            new Schema\Field('test2', new Int8())
+            new Schema\Field('test2', new Int8()),
         );
 
         self::assertSame(['test1' => 1, 'test2' => 10], $schema->read($buffer));
@@ -80,7 +80,7 @@ final class SchemaTest extends TestCase
     {
         $schema = new Schema(
             new Schema\Field('test1', new Int8()),
-            new Schema\Field('test2', new NonNullableString())
+            new Schema\Field('test2', new NonNullableString()),
         );
 
         self::assertSame(7, $schema->sizeOf(['test1' => 1, 'test2' => 'test']));
@@ -102,7 +102,7 @@ final class SchemaTest extends TestCase
     {
         $schema = new Schema(
             new Schema\Field('test1', new Int8()),
-            new Schema\Field('test2', new NullableString())
+            new Schema\Field('test2', new NullableString()),
         );
 
         $schema->validate(['test1' => 1, 'test2' => 'test']);
@@ -127,7 +127,7 @@ final class SchemaTest extends TestCase
     {
         $schema = new Schema(
             new Schema\Field('test1', new Int8()),
-            new Schema\Field('test2', new Int8())
+            new Schema\Field('test2', new Int8()),
         );
 
         $this->expectException(SchemaValidationFailure::class);
@@ -151,7 +151,7 @@ final class SchemaTest extends TestCase
     {
         $schema = new Schema(
             new Schema\Field('test1', new Int8()),
-            new Schema\Field('test2', new Int8())
+            new Schema\Field('test2', new Int8()),
         );
 
         $this->expectException(SchemaValidationFailure::class);
@@ -177,7 +177,7 @@ final class SchemaTest extends TestCase
     {
         $schema = new Schema(
             new Schema\Field('test1', new Int8()),
-            new Schema\Field('test2', new Int8())
+            new Schema\Field('test2', new Int8()),
         );
 
         $this->expectException(SchemaValidationFailure::class);
