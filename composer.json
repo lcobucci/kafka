@@ -22,6 +22,7 @@
         "php-64bit": "^8.1",
         "ext-pcntl": "*",
         "psr/log": "^3.0",
+        "react/async": "^4.0",
         "react/socket": "^1.6"
     },
     "require-dev": {

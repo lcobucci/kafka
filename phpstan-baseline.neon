@@ -1,9 +1,49 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#2 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:unpack\\(\\) expects string, mixed given\\.$#"
-			count: 5
-			path: src/Protocol/Buffer.php
+			message: "#^Cannot use array destructuring on array\\<int\\|string, array\\<int, array\\<int, int\\|Lcobucci\\\\Kafka\\\\Protocol\\\\API\\\\Request\\|string\\>\\|int\\|Lcobucci\\\\Kafka\\\\Protocol\\\\API\\\\Request\\|React\\\\Promise\\\\Deferred\\|string\\>\\|int\\|React\\\\Promise\\\\Deferred\\>\\|int\\.$#"
+			count: 1
+			path: src/Client/Channel.php
+
+		-
+			message: "#^Parameter \\#1 \\$errorCode of class Lcobucci\\\\Kafka\\\\Protocol\\\\API\\\\ApiVersionsResponse constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/API/ApiVersionsResponse.php
+
+		-
+			message: "#^Parameter \\#2 \\$apiVersions of class Lcobucci\\\\Kafka\\\\Protocol\\\\API\\\\ApiVersionsResponse constructor expects array\\<int, array\\{api_key\\: int, min_version\\: int, max_version\\: int\\}\\>, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/API/ApiVersionsResponse.php
+
+		-
+			message: "#^Parameter \\#3 \\$throttleTime of class Lcobucci\\\\Kafka\\\\Protocol\\\\API\\\\ApiVersionsResponse constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/API/ApiVersionsResponse.php
+
+		-
+			message: "#^Parameter \\#1 \\$errorCode of class Lcobucci\\\\Kafka\\\\Protocol\\\\API\\\\MetadataResponse constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/API/MetadataResponse.php
+
+		-
+			message: "#^Parameter \\#2 \\$apiVersions of class Lcobucci\\\\Kafka\\\\Protocol\\\\API\\\\MetadataResponse constructor expects array\\<int, array\\{api_key\\: int, min_version\\: int, max_version\\: int\\}\\>, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/API/MetadataResponse.php
+
+		-
+			message: "#^Parameter \\#3 \\$throttleTime of class Lcobucci\\\\Kafka\\\\Protocol\\\\API\\\\MetadataResponse constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/API/MetadataResponse.php
+
+		-
+			message: "#^Parameter \\#1 \\$definition of method Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\\\Parser\\:\\:parse\\(\\) expects array\\<string, array\\<string, mixed\\>\\|class\\-string\\<Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\>\\>, array\\<string, array\\<string, mixed\\>\\|string\\> given\\.$#"
+			count: 1
+			path: src/Protocol/API/Request.php
+
+		-
+			message: "#^Parameter \\#1 \\$definition of method Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\\\Parser\\:\\:parse\\(\\) expects array\\<string, array\\<string, mixed\\>\\|class\\-string\\<Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\>\\>, array\\<string, array\\<string, mixed\\>\\|string\\> given\\.$#"
+			count: 1
+			path: src/Protocol/API/Response.php
 
 		-
 			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\:\\:validateField\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
@@ -14,6 +54,21 @@ parameters:
 			message: "#^Property Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\:\\:\\$fields \\(array\\<int, Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\\\Field\\>\\) does not accept array\\<int\\|string, Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\\\Field\\>\\.$#"
 			count: 1
 			path: src/Protocol/Schema.php
+
+		-
+			message: "#^Parameter \\#1 \\$definition of method Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\\\Parser\\:\\:parse\\(\\) expects array\\<string, array\\<string, mixed\\>\\|class\\-string\\<Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\>\\>, array\\<string, mixed\\> given\\.$#"
+			count: 1
+			path: src/Protocol/Schema/Parser.php
+
+		-
+			message: "#^Parameter \\#1 \\$fieldDefinition of method Lcobucci\\\\Kafka\\\\Protocol\\\\Schema\\\\Parser\\:\\:parseFieldType\\(\\) expects array\\<string, mixed\\>\\|class\\-string\\<Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\>, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Schema/Parser.php
+
+		-
+			message: "#^Parameter \\#2 \\$nullable of class Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\\\ArrayOf constructor expects bool, mixed given\\.$#"
+			count: 1
+			path: src/Protocol/Schema/Parser.php
 
 		-
 			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
@@ -66,11 +121,6 @@ parameters:
 			path: src/Protocol/Type/Int8.php
 
 		-
-			message: "#^Parameter \\#1 \\$content of static method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:fromContent\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: src/Protocol/Type/NonNullableBytes.php
-
-		-
 			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardClass\\(\\) expects object\\|null, mixed given\\.$#"
 			count: 1
 			path: src/Protocol/Type/NonNullableBytes.php
@@ -79,11 +129,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$object_or_class of function is_a expects object, mixed given\\.$#"
 			count: 2
 			path: src/Protocol/Type/NonNullableBytes.php
-
-		-
-			message: "#^Method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\\\NonNullableString\\:\\:read\\(\\) should return string but returns mixed\\.$#"
-			count: 1
-			path: src/Protocol/Type/NonNullableString.php
 
 		-
 			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardLength\\(\\) expects string\\|null, mixed given\\.$#"
@@ -101,19 +146,9 @@ parameters:
 			path: src/Protocol/Type/NonNullableString.php
 
 		-
-			message: "#^Parameter \\#1 \\$content of static method Lcobucci\\\\Kafka\\\\Protocol\\\\Buffer\\:\\:fromContent\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: src/Protocol/Type/NullableBytes.php
-
-		-
 			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardClass\\(\\) expects object\\|null, mixed given\\.$#"
 			count: 1
 			path: src/Protocol/Type/NullableBytes.php
-
-		-
-			message: "#^Method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\\\NullableString\\:\\:read\\(\\) should return string\\|null but returns mixed\\.$#"
-			count: 1
-			path: src/Protocol/Type/NullableString.php
 
 		-
 			message: "#^Parameter \\#1 \\$data of method Lcobucci\\\\Kafka\\\\Protocol\\\\Type\\:\\:guardLength\\(\\) expects string\\|null, mixed given\\.$#"
