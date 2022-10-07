@@ -29,8 +29,10 @@ final class Buffer
 
     private int $position = 0;
 
-    private function __construct(private string $bytes, private int $length)
-    {
+    private function __construct(
+        private string $bytes,
+        private readonly int $length,
+    ) {
     }
 
     /**
@@ -138,7 +140,7 @@ final class Buffer
      *
      * @throws NotEnoughBytesAllocated When trying to read from an invalid position.
      */
-    public function read(int $length): mixed
+    public function read(int $length): string
     {
         $offset = $this->nextIndex($length);
 

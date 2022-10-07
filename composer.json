@@ -22,9 +22,11 @@
         "php-64bit": "^8.1",
         "ext-pcntl": "*",
         "psr/log": "^3.0",
+        "react/async": "^4.0",
         "react/socket": "^1.6"
     },
     "require-dev": {
+        "behat/behat": "^3.11",
         "infection/infection": "^0.26",
         "lcobucci/coding-standard": "^8.0",
         "monolog/monolog": "^3.2",
