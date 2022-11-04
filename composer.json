@@ -26,7 +26,7 @@
     },
     "require-dev": {
         "infection/infection": "^0.26",
-        "lcobucci/coding-standard": "^8.0",
+        "lcobucci/coding-standard": "^9.0.0",
         "monolog/monolog": "^3.2",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^1.8",
