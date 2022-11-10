@@ -29,7 +29,7 @@
         "lcobucci/coding-standard": "^9.0.0",
         "monolog/monolog": "^3.2",
         "phpstan/extension-installer": "^1.2.0",
-        "phpstan/phpstan": "^1.9.1",
+        "phpstan/phpstan": "^1.9.2",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.2.2",
         "phpstan/phpstan-strict-rules": "^1.4.4",
