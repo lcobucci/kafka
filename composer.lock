@@ -662,16 +662,16 @@
     "packages-dev": [
         {
             "name": "colinodell/json5",
-            "version": "v2.2.2",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/colinodell/json5.git",
-                "reference": "2b0fabd1ba71fe8079a832d6097ec5c6fd92361d"
+                "reference": "15b063f8cb5e6deb15f0cd39123264ec0d19c710"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/colinodell/json5/zipball/2b0fabd1ba71fe8079a832d6097ec5c6fd92361d",
-                "reference": "2b0fabd1ba71fe8079a832d6097ec5c6fd92361d",
+                "url": "https://api.github.com/repos/colinodell/json5/zipball/15b063f8cb5e6deb15f0cd39123264ec0d19c710",
+                "reference": "15b063f8cb5e6deb15f0cd39123264ec0d19c710",
                 "shasum": ""
             },
             "require": {
@@ -684,11 +684,11 @@
             },
             "require-dev": {
                 "mikehaertl/php-shellcommand": "^1.2.5",
-                "phpstan/phpstan": "^0.12.58",
+                "phpstan/phpstan": "^1.4",
                 "scrutinizer/ocular": "^1.6",
-                "squizlabs/php_codesniffer": "^2.3",
-                "symfony/finder": "^4.4|^5.2",
-                "symfony/phpunit-bridge": "^5.1"
+                "squizlabs/php_codesniffer": "^2.3 || ^3.0",
+                "symfony/finder": "^4.4|^5.4|^6.0",
+                "symfony/phpunit-bridge": "^5.4|^6.0"
             },
             "bin": [
                 "bin/json5"
@@ -729,7 +729,7 @@
             ],
             "support": {
                 "issues": "https://github.com/colinodell/json5/issues",
-                "source": "https://github.com/colinodell/json5/tree/v2.2.2"
+                "source": "https://github.com/colinodell/json5/tree/v2.3.0"
             },
             "funding": [
                 {
@@ -749,7 +749,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-02-22T14:42:16+00:00"
+            "time": "2022-12-27T16:44:40+00:00"
         },
         {
             "name": "composer/pcre",
@@ -1961,16 +1961,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.15.2",
+            "version": "1.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "5941477f100993652218928039d530b75a13a9ca"
+                "reference": "61800f71a5526081d1b5633766aa88341f1ade76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/5941477f100993652218928039d530b75a13a9ca",
-                "reference": "5941477f100993652218928039d530b75a13a9ca",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/61800f71a5526081d1b5633766aa88341f1ade76",
+                "reference": "61800f71a5526081d1b5633766aa88341f1ade76",
                 "shasum": ""
             },
             "require": {
@@ -2000,9 +2000,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.15.2"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.15.3"
             },
-            "time": "2022-12-16T06:42:48+00:00"
+            "time": "2022-12-20T20:56:55+00:00"
         },
         {
             "name": "phpstan/phpstan",
