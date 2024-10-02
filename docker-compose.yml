@@ -5,7 +5,7 @@ services:
       - ALLOW_ANONYMOUS_LOGIN=yes
 
   kafka1:
-    image: bitnami/kafka:2.8.1
+    image: bitnami/kafka:3.8.0
     ports:
       - "9093:9093"
     environment:
@@ -17,7 +17,7 @@ services:
       - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
 
   kafka2:
-    image: bitnami/kafka:2.8.1
+    image: bitnami/kafka:3.8.0
     profiles:
       - clustered
     ports:
